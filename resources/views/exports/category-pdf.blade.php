@@ -1,0 +1,69 @@
+<!-- resources/views/exports/category-pdf.blade.php -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instrument Categories</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .status-active {
+            color: green;
+        }
+        .status-inactive {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h2>Instrument Categories List</h2>
+    <p>Generated on: {{ date('Y-m-d H:i:s') }}</p>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($categories as $category)
+        <tr>
+            <td>{{ $category->id }}</td>
+            <td>{{ $category->title }}</td>
+            <td>{{ $category->description }}</td>
+            <td class="{{ $category->status == 1 ? 'status-active' : 'status-inactive' }}">
+                {{ $category->status == 1 ? 'Active' : 'Inactive' }}
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+</body>
+</html>
