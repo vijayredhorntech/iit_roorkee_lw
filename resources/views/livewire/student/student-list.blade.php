@@ -131,7 +131,12 @@
                                     <span><i class="fa-solid fa-calendar-days mr-1 text-danger"></i> {{ $student->year_of_study }} Year</span>
                                 </td>
                                 <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
-                                   <i class="fa fa-calendar-plus mr-1 text-success"></i> <a href="" class="font-bold">0</a>
+                                  <span> <i class="fa fa-calendar-check mr-1 text-success"></i> <span class="font-bold">
+                                      {{ $student->confirmedBookings->count() }}
+                                    </span></span> /  <i class="fa fa-calendar-xmark mr-1 text-danger"></i> <span class="font-bold">
+                                        {{ $student->cancelledBookings->count() }}
+
+                                    </span>
                                 </td>
                                 <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
                                     <button wire:click="toggleStatus({{ $student->id }})" class="focus:outline-none">

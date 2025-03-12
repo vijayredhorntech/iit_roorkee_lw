@@ -1,3 +1,3 @@
 <x-app-layout>
-   <livewire:bookings.create />
+    <livewire:bookings.create />
 </x-app-layout>

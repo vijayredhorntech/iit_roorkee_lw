@@ -3,6 +3,7 @@
 namespace App\Livewire\Pi;
 
 use App\Models\PrincipalInvestigator;
+use App\Models\Student;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -22,6 +23,9 @@ class PiList extends Component
     public $isEditing = false;
     public $piId = null;
     public $viewPiDetailView =false;
+    public $showPiStudents = false;
+    public $selectedPi = null;
+    public $studentList = null;
 
     // Event listener for the form submission
     protected $listeners = [
@@ -29,9 +33,7 @@ class PiList extends Component
         'piUpdated' => 'handlePiUpdated',
         'hideViewPi' => 'handleHideViewPi',
     ];
-    /**
-     * @var PrincipalInvestigator|PrincipalInvestigator[]|\LaravelIdea\Helper\App\Models\_IH_PrincipalInvestigator_C
-     */
+
     public $viewPiDetails;
 
     public function hideForm()
@@ -75,6 +77,22 @@ class PiList extends Component
     public function handleHideViewPi()
     {
         $this->viewPiDetailView = false;
+    }
+
+    public function viewPiStudents($id)
+    {
+
+         $this->selectedPi = PrincipalInvestigator::findOrFail($id);
+         $this->studentList = Student::where('principal_investigator_id', $id)->get();
+
+         $this->showPiStudents = true;
+    }
+
+    public function hidePiStudentTable()
+    {
+        $this->showPiStudents = false;
+        $this->selectedPi = null;
+        $this->studentList = null;
     }
 
     public function toggleStatus($id)

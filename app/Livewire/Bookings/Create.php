@@ -22,9 +22,41 @@ class Create extends Component
     public $allSlots = [];
     public $bookedSlotIds = [];
 
+    protected $listeners = [
+        'showForm' => 'handleShowForm',
+        'toastError' => 'showErrorToast',
+        'toastSuccess' => 'showSuccessToast'
+
+    ];
+
+    public function showSuccessToast($message)
+    {
+        session()->flash('success', $message);
+    }
+
+    public function showErrorToast($message)
+    {
+        session()->flash('error', $message);
+    }
+
+    public function handleShowForm()
+    {
+        $this->isEditing = true;
+    }
+
+
     public function mount()
     {
         $this->date = Carbon::today()->format('Y-m-d');
+    }
+
+
+    public function hideForm()
+    {
+        $this->reset(['student', 'instrument', 'selectedSlot', 'selectedInstrument', 'description']);
+        $this->date = Carbon::today()->format('Y-m-d');
+        $this->selectedDate = null;
+        $this->isEditing = false;
     }
 
     public function updatedInstrument($instrumentId)
@@ -68,12 +100,31 @@ class Create extends Component
         // Get all slots
         $this->allSlots = Slot::orderBy('start_time')->get();
 
-        // Get booked slots for the selected date and instrument
+        $currentDate = Carbon::today();
+        $selectedDate = Carbon::parse($this->date);
+        $currentTime = Carbon::now();
+
+        // Get booked slots and expired slots for the selected date and instrument
         $this->bookedSlotIds = Booking::where('instrument_id', $this->selectedInstrument->id)
-            ->where('date', Carbon::parse($this->date)->format('Y-m-d'))
+            ->where('date', $selectedDate->format('Y-m-d'))
             ->where('status', 'confirmed')
             ->pluck('slot_id')
             ->toArray();
+
+        // If the selected date is today, add expired slots to bookedSlotIds
+        if ($selectedDate->isToday()) {
+            foreach ($this->allSlots as $slot) {
+                $slotEndTime = Carbon::parse($this->date . ' ' . $slot->end_time);
+                if ($slotEndTime->isPast()) {
+                    $this->bookedSlotIds[] = $slot->id;
+                }
+            }
+        }
+
+        // If selected date is in the past, mark all slots as booked
+        if ($selectedDate->isBefore($currentDate)) {
+            $this->bookedSlotIds = $this->allSlots->pluck('id')->toArray();
+        }
     }
 
     public function rules()
@@ -117,6 +168,8 @@ class Create extends Component
 
             // Show success message
             session()->flash('success', 'Booking created successfully!');
+            $this->hideForm();
+
         } catch (\Exception $e) {
             session()->flash('error', 'An error occurred while creating the booking. Please try again.');
         }

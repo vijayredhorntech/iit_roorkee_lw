@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
 
-    protected $fillable = ['instrument_id', 'student_id', 'slot_id', 'date', 'status'];
+    protected $fillable = ['instrument_id', 'student_id', 'slot_id', 'date', 'status', 'description'];
 
 
     public function instrument()

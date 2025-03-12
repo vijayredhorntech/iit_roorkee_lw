@@ -111,22 +111,14 @@
                                 Sr. No.
                             </td>
                             <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">
-                                Photo
+                                Profile
+                            </td>
+
+                            <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">
+                                Contact Info
                             </td>
                             <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">
-                                Name
-                            </td>
-                            <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">
-                                Email
-                            </td>
-                            <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">
-                                Phone
-                            </td>
-                            <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">
-                                Designation
-                            </td>
-                            <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">
-                                Department
+                                Students
                             </td>
                             <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">
                                 Status
@@ -140,14 +132,24 @@
                             <tr class="hover:bg-secondary/10 cursor-pointer transition ease-in duration-2000">
                                 <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$loop->iteration}}</td>
                                 <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
-                                    <img src="{{ asset('storage/' . $pi->profile_photo) }}"
-                                         alt="{{ $pi->getFullNameAttribute() }}" class="h-8 w-8 object-cover rounded-full"/>
+                                    <div class="flex items-center gap-2">
+                                        <img src="{{ asset('storage/' . $pi->profile_photo) }}"
+                                             alt="{{ $pi->getFullNameAttribute()  }}" class="h-12 w-12 object-cover rounded-full"/>
+                                        <div>
+                                            <span class=" text-md">{{$pi->getFullNameAttribute() }}</span> <br>
+                                            <span class="mt-1 text-xs">{{ $pi->designation }}</span>/
+                                            <span class="mt-1 text-xs">{{ $pi->department }}</span>
+                                        </div>
+                                    </div>
+
                                 </td>
-                                <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$pi->getFullNameAttribute()}}</td>
-                                <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$pi->email}}</td>
-                                <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$pi->phone}}</td>
-                                <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$pi->designation}}</td>
-                                <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$pi->department}}</td>
+                                <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                                    <span><i class="fa fa-envelope mr-1 text-success"></i> {{ $pi->email }}</span> <br>
+                                    <span><i class="fa fa-phone mr-1 text-danger"></i> {{ $pi->phone }}</span>
+                                </td>
+                                <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                                    <span wire:click="viewPiStudents({{ $pi->id }})" class="cursor-pointer group"><i class="fa fa-user-graduate mr-1 text-success group-hover:text-danger transition ease-in duration-2000"></i> <span class="text-md font-bold">{{ $pi->students->count() }}</span></span> <br>
+                                </td>
                                 <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
                                     <button wire:click="toggleStatus({{ $pi->id }})" class="focus:outline-none">
                                         @if($pi->status == '0')
@@ -190,6 +192,79 @@
                         {{ $piList->links() }}
                     </div>
                 </div>
+
+
+
+                @if($showPiStudents)
+                    <div class="mt-6 w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col shadow-lg shadow-gray-300 mt-6">
+                        <div class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20 flex justify-between">
+                            <span class="font-semibold text-primary text-xl">Students of <i>{{ $selectedPi->getFullNameAttribute() }}</i></span>
+                            <span wire:click="hidePiStudentTable" class="text-sm bg-primary/80 px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-primary/80 text-white hover:text-white hover:bg-primary hover:border-ternary/30 transition ease-in duration-2000 cursor-pointer">
+                                 <i class="fa fa-user-plus mr-2"></i>Back
+                               </span>
+                        </div>
+
+                        <div class="w-full overflow-x-auto p-4">
+                            <table class="w-full border-[2px] border-secondary/40 border-collapse mt-4" wire:loading.class="opacity-25">
+                                <tr>
+                                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Sr. No.</td>
+                                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Profile</td>
+                                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Contact</td>
+                                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">PI/ Lab</td>
+                                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Department</td>
+                                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Bookings</td>
+                                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Status</td>
+                                </tr>
+
+                                @forelse($studentList as $student)
+                                    <tr class="hover:bg-secondary/10 cursor-pointer transition ease-in duration-2000">
+                                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$loop->iteration}}</td>
+                                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                                            <div class="flex items-center gap-2">
+                                                <img src="{{ asset('storage/' . $student->profile_photo) }}"
+                                                     alt="{{ $student->first_name }}" class="h-12 w-12 object-cover rounded-full"/>
+                                                <div>
+                                                    <span class=" text-md">{{$student->first_name}} {{$student->last_name}}</span> <br>
+                                                    <span class="mt-1 text-xs">{{ $student->academic_id }}</span>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                                            <span><i class="fa fa-envelope mr-1 text-success"></i> {{ $student->email }}</span> <br>
+                                            <span><i class="fa fa-phone mr-1 text-danger"></i> {{ $student->mobile_number }}</span>
+                                        </td>
+                                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                                            <span><i class="fa fa-user mr-1 text-primary"></i> {{ $student->principalInvestigator->getFullNameAttribute() }}</span> <br>
+                                            <span><i class="fa-solid fa-flask mr-1 text-success"></i> {{ $student->principalInvestigator->labs?->lab_name }}</span>
+                                        </td>
+                                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                                            <span><i class="fa fa-building mr-1 text-success"></i> {{ $student->department }}</span> <br>
+                                            <span><i class="fa-solid fa-calendar-days mr-1 text-danger"></i> {{ $student->year_of_study }} Year</span>
+                                        </td>
+                                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                                            <i class="fa fa-calendar-plus mr-1 text-success"></i> <a href="" class="font-bold">0</a>
+                                        </td>
+                                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                                            <button wire:click="toggleStatus({{ $student->id }})" class="focus:outline-none">
+                                                @if($student->status == '0')
+                                                    <span class="bg-danger/20 text-danger px-2 py-0.5 rounded-full text-xs">Inactive</span>
+                                                @else
+                                                    <span class="bg-success/20 text-success px-2 py-0.5 rounded-full text-xs">Active</span>
+                                                @endif
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm text-center">No students found</td>
+                                    </tr>
+                                @endforelse
+                            </table>
+
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
        @endif

@@ -34,4 +34,19 @@ class Student extends Model
     {
         return $this->belongsTo(PrincipalInvestigator::class);
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    public function confirmedBookings()
+    {
+        return $this->hasMany(Booking::class)->where('status', 'confirmed');
+    }
+
+    public function cancelledBookings()
+    {
+        return $this->hasMany(Booking::class)->where('status', 'cancelled');
+    }
 }
