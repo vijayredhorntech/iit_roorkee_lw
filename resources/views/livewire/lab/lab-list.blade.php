@@ -1,5 +1,5 @@
 <div>
-    <div wire:show="showForm"
+    <div wire:show="showForm" @if(!$showForm) style="display: none;" @endif
         class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col shadow-lg shadow-gray-300">
 
         <div  class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20 flex justify-between">
@@ -10,7 +10,7 @@
 
         </div>
 
-        <div id="formDiv" class="w-full border-b-[2px] border-b-ternary/10 shadow-lg shadow-ternary/20">
+        <div id="formDiv" class="w-full border-b-[2px] border-b-ternary/10 shadow-lg shadow-ternary/20" >
             <livewire:lab.lab-form />
         </div>
     </div>

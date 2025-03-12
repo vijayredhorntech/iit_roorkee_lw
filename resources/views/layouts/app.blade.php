@@ -144,6 +144,26 @@
                     <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                 </div>
             </a>
+            <a href="{{route('instrument.instrument')}}">
+                <div
+                    class=" {{Route::currentRouteName()==='instrument.instrument'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                    <div class="flex items-center">
+                        <i class="fa fa-microscope mr-2 text-sm"></i>
+                        <span class="text-lg font-medium">Instruments</span>
+                    </div>
+                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
+                </div>
+            </a>
+            <a href="{{route('bookings.create')}}">
+                <div
+                    class=" {{Route::currentRouteName()==='bookings.create'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                    <div class="flex items-center">
+                        <i class="fa fa-calendar-days mr-2 text-sm"></i>
+                        <span class="text-lg font-medium">Bookings</span>
+                    </div>
+                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
+                </div>
+            </a>
 
             <!-- PI Section -->
 {{--            <div class="cursor-pointer group">--}}

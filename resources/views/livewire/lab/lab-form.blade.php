@@ -1,4 +1,4 @@
-<div>
+<div >
     <form wire:submit.prevent="submit" enctype="multipart/form-data" wire:loading.class="opacity-50">
 
         <div class="w-full grid xl:grid-cols-4 gap-2 p-4">

@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +12,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        // Seed Users
+        \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'admin@admin.com',
         ]);
+
+        // Seed Slots
+        $startTime = strtotime('09:00');
+        $endTime = strtotime('18:00');
+        $interval = 30 * 60; // 30 minutes in seconds
+
+        $slots = [];
+        while ($startTime < $endTime) {
+            $nextTime = $startTime + $interval;
+            $slots[] = [
+                'start_time' => date('H:i', $startTime),
+                'end_time' => date('H:i', $nextTime),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+            $startTime = $nextTime;
+        }
+
+        DB::table('slots')->insert($slots);
     }
 }

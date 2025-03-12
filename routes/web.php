@@ -32,6 +32,15 @@ Route::prefix('instrument')->name('instrument.')->group(function () {
     Route::view('/category', 'pages.instruments.category')
         ->middleware(['auth'])
         ->name('instrument-category');
+    Route::view('/instrument', 'pages.instruments.instrument')
+        ->middleware(['auth'])
+        ->name('instrument');
+});
+
+Route::prefix('bookings')->name('bookings.')->group(function () {
+    Route::view('/', 'pages.bookings.create')
+        ->middleware(['auth'])
+        ->name('create');
 });
 
 require __DIR__.'/auth.php';

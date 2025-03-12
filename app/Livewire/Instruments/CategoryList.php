@@ -16,7 +16,7 @@ class CategoryList extends Component
     public $status = 'All';
     public $isEditing = false;
     public $categoryId = null;
-    public $gridView = 1;
+    public $gridView = 0;
 
     protected $listeners = [
         'categoryCreated' => 'handleCategoryCreated',
