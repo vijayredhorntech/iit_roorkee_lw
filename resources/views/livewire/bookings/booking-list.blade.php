@@ -136,7 +136,7 @@
                 <h3 class="text-lg font-semibold mb-4 text-danger">Cancel Booking</h3>
                 <div class="w-full flex flex-col gap-1 xl:col-span-2">
                     <label class="font-semibold text-primary">Cancellation Remark <span class="text-danger">*</span></label>
-                    <textarea wire:model="cancellationRemark" rows="2" placeholder="Enter address" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"></textarea>
+                    <textarea wire:model="cancellationRemark" rows="2" placeholder="Enter cancellation remark" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"></textarea>
                     @error('cancellationRemark') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
                 </div>
                 <div class="flex justify-end space-x-3 mt-4">
