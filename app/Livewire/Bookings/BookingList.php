@@ -5,13 +5,17 @@ namespace App\Livewire\Bookings;
 use App\Models\Booking;
 use App\Models\Student;
 use App\Models\Instrument;
+use App\Models\InstrumentComplaint;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class BookingList extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     public $search = '';
     public $studentSearch = '';
@@ -57,6 +61,13 @@ class BookingList extends Component
     public $selectedBooking = null;
     public $cancellationRemark = '';
 
+    // Complaint Modal Properties
+    public $showComplaintModal = false;
+    public $complaintSubject = '';
+    public $complaintDescription = '';
+    public $complaintImage = null;
+    public $complaintBooking = null;
+
     public function cancelBooking($bookingId)
     {
         $this->selectedBooking = Booking::with('slot')->find($bookingId);
@@ -88,6 +99,60 @@ class BookingList extends Component
         $this->selectedBooking = null;
         $this->cancellationRemark = '';
         $this->dispatch('toastSuccess', 'Booking has been cancelled successfully.');
+    }
+
+    public function raiseComplaint($bookingId)
+    {
+        $this->complaintBooking = Booking::with('slot')->find($bookingId);
+        $bookingDateTime = $this->complaintBooking->date . ' ' . $this->complaintBooking->slot->start_time;
+        $slotStartTime = strtotime($bookingDateTime);
+        $fifteenMinutesAfterStart = strtotime('+15 minutes', $slotStartTime);
+
+        if (time() < $slotStartTime || time() > $fifteenMinutesAfterStart) {
+            $this->dispatch('toastError', 'Complaints can only be raised within 15 minutes of slot start time.');
+            return;
+        }
+
+        // Check if a complaint already exists for this booking
+        $existingComplaint = InstrumentComplaint::where('booking_id', $bookingId)->first();
+        if ($existingComplaint) {
+            $this->dispatch('toastError', 'A complaint has already been registered for this booking.');
+            return;
+        }
+
+        $this->showComplaintModal = true;
+    }
+
+    public function submitComplaint()
+    {
+        $this->validate([
+            'complaintSubject' => 'required|min:5',
+            'complaintDescription' => 'required|min:10',
+            'complaintImage' => 'nullable|image|max:1024',
+        ]);
+
+        $imagePath = null;
+        if ($this->complaintImage) {
+            $imagePath = $this->complaintImage->store('complaint-images', 'public');
+        }
+
+        InstrumentComplaint::create([
+            'instrument_id' => $this->complaintBooking->instrument_id,
+            'student_id' => $this->complaintBooking->student_id,
+            'booking_id' => $this->complaintBooking->id,
+            'subject' => $this->complaintSubject,
+            'description' => $this->complaintDescription,
+            'image' => $imagePath,
+            'status' => 'pending'
+        ]);
+
+        $this->showComplaintModal = false;
+        $this->complaintBooking = null;
+        $this->complaintSubject = '';
+        $this->complaintDescription = '';
+        $this->complaintImage = null;
+
+        $this->dispatch('toastSuccess', 'Complaint has been submitted successfully.');
     }
 
     public function render()

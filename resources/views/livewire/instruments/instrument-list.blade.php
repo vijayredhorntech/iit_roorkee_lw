@@ -60,7 +60,7 @@
                             @endif
                         </td>
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$instrument->name}}</td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$instrument->instrumentCategory->title}}</td>
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$instrument->instrumentCategory->title??''}}</td>
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$instrument->lab->lab_name}}</td>
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$instrument->model_number}}</td>
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$instrument->serial_number}}</td>

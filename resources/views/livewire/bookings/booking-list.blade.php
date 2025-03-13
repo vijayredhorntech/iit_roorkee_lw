@@ -112,6 +112,9 @@
                                     <button wire:click="cancelBooking({{ $booking->id }})" title="Cancel Booking" class="bg-danger/20 text-danger h-6 w-6 flex justify-center items-center rounded-[3px] hover:bg-danger hover:text-white cursor-pointer transition ease-in duration-2000">
                                         <i class="fa fa-times text-xs"></i>
                                     </button>
+                                    <button wire:click="raiseComplaint({{ $booking->id }})" title="Raise Issue" class="bg-warning/20 text-warning h-6 w-6 flex justify-center items-center rounded-[3px] hover:bg-warning hover:text-white cursor-pointer transition ease-in duration-2000">
+                                        <i class="fa fa-exclamation-triangle text-xs"></i>
+                                    </button>
                                 @endif
                             </div>
                         </td>
@@ -155,6 +158,40 @@
             </span>
                     </button>
                 </div>
+            </div>
+        </div>
+    @endif
+    @if($showComplaintModal)
+        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+                <h3 class="text-lg font-semibold mb-4 text-danger">Raise Issue</h3>
+                <form wire:submit="submitComplaint">
+                    <div class="w-full flex flex-col gap-4">
+                        <div class="w-full flex flex-col gap-1">
+                            <label class="font-semibold text-primary">Subject <span class="text-danger">*</span></label>
+                            <input type="text" wire:model="complaintSubject" placeholder="Enter issue subject" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                            @error('complaintSubject') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                        </div>
+                        <div class="w-full flex flex-col gap-1">
+                            <label class="font-semibold text-primary">Description <span class="text-danger">*</span></label>
+                            <textarea wire:model="complaintDescription" rows="3" placeholder="Enter issue description" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"></textarea>
+                            @error('complaintDescription') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                        </div>
+                        <div class="w-full flex flex-col gap-1">
+                            <label class="font-semibold text-primary">Image</label>
+                            <input type="file" wire:model="complaintImage" accept="image/*" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                            <div wire:loading wire:target="complaintImage" class="text-sm text-danger"><i class="fas fa-hourglass-half fa-spin mr-2"></i> Uploading file... Please wait</div>
+                            @error('complaintImage') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-4">
+                        <button type="button" wire:click="$set('showComplaintModal', false)" class="text-sm bg-success/30 px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-success/90 text-ternary hover:text-white hover:bg-success hover:border-ternary/30 transition ease-in duration-2000">Back</button>
+                        <button type="submit" class="text-sm bg-danger/30 px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-danger/90 text-ternary hover:text-white hover:bg-danger hover:border-danger/30 transition ease-in duration-2000">
+                            <span wire:loading.remove wire:target="submitComplaint">Submit Issue</span>
+                            <span wire:loading wire:target="submitComplaint">Submitting... <i class="fas fa-hourglass-half fa-spin ml-2"></i></span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     @endif
