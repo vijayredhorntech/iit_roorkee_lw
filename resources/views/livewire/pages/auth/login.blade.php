@@ -33,7 +33,7 @@ new #[Layout('layouts.guest')] class extends Component
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input    wire:model.live="form.email"  id="email" type="email" name="email" required autofocus autocomplete="username" />
+            <x-text-input    wire:model="form.email"  id="email" type="email" name="email" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
         </div>
 
