@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Student;
 
+use App\Mail\WelcomePrincipalInvestigatorMail;
 use App\Models\PrincipalInvestigator;
 use App\Models\Student;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Hash;
@@ -136,6 +138,7 @@ class StudentForm extends Component
         }
 
         Student::create($studentData);
+        Mail::to($user->email)->send(new WelcomePrincipalInvestigatorMail($user, $password));
 
         $this->resetForm();
         session()->flash('success', 'Student created successfully!');

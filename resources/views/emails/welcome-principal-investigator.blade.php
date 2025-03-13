@@ -55,7 +55,7 @@
     <div class="header">Welcome to IIT Roorkee</div>
     <div class="content">
         <p>Dear <strong>{{$user->name}}</strong>,</p>
-        <p>We are excited to welcome you as a Principal Investigator on our platform.</p>
+        <p>We are excited to welcome you.</p>
         <p>Your account has been successfully created. Below are your login details:</p>
         <p><strong>Username:</strong> {{$user->email}}</p>
         <p><strong>Password:</strong>

@@ -169,12 +169,7 @@ class PiForm extends Component
         }
 
         PrincipalInvestigator::create($piData);
-
-
-//        Mail::to($user->email)->send(new WelcomePrincipalInvestigatorMail($user, $password));
-
-
-
+        Mail::to($user->email)->send(new WelcomePrincipalInvestigatorMail($user, $password));
         $this->resetForm();
         session()->flash('success', 'Principal Investigator created successfully!');
 
