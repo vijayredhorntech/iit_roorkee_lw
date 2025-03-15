@@ -16,9 +16,6 @@ class StudentList extends Component
     public $showForm = false;
     public $search = '';
     public $status = 'All';
-    public $totalStudents = 0;
-    public $activeStudents = 0;
-    public $inactiveStudents = 0;
     public $departments = 7; // Added a default count for departments
     public $isEditing = false;
     public $studentId = null;
@@ -125,7 +122,16 @@ class StudentList extends Component
 
     public function render()
     {
-        $query = Student::query()->latest();
+
+//        $query = Student::query()->latest();
+        if (auth()->user()->hasRole('super_admin'))
+        {
+            $query = Student::query()->latest();
+        }
+        else
+        {
+            $query = Student::where('principal_investigator_id', auth()->user()->principalInvestigators->first()->id)->latest();
+        }
 
         if ($this->search) {
             $query->where(function($q) {
@@ -141,9 +147,6 @@ class StudentList extends Component
         }
 
         $studentList = $query->paginate(10);
-        $this->totalStudents = Student::count();
-        $this->inactiveStudents = Student::where('status', 0)->count();
-        $this->activeStudents = Student::where('status', 1)->count();
 
         return view('livewire.student.student-list', [
             'studentList' => $studentList,

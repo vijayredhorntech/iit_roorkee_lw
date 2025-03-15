@@ -3,56 +3,6 @@
            <livewire:pi.pi-view :pi="$viewPiDetails"/>
         @else
         <div>
-            <div class="w-full grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
-
-                <!-- Total PIs -->
-                <div
-                    class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-primary bg-white flex gap-2 items-center justify-between p-4">
-                    <div class="flex flex-col gap-2">
-                        <span class="font-semibold text-ternary/70 text-md">Total PI</span>
-                        <span class="font-bold text-2xl text-ternary">{{$totalPi}}</span>
-                    </div>
-                    <div>
-                        <i class="fa fa-users text-4xl text-primary"></i>
-                    </div>
-                </div>
-
-                <!-- Active PIs -->
-                <div
-                    class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-success bg-white flex gap-2 items-center justify-between p-4">
-                    <div class="flex flex-col gap-2">
-                        <span class="font-semibold text-ternary/70 text-md">Active PI</span>
-                        <span class="font-bold text-2xl text-ternary">{{$activePi}}</span>
-                    </div>
-                    <div>
-                        <i class="fa fa-user-check text-4xl text-success"></i>
-                    </div>
-                </div>
-
-                <!-- Inactive PIs -->
-                <div
-                    class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-warning bg-white flex gap-2 items-center justify-between p-4">
-                    <div class="flex flex-col gap-2">
-                        <span class="font-semibold text-ternary/70 text-md">Inactive PI</span>
-                        <span class="font-bold text-2xl text-ternary">{{$inactivePi}}</span>
-                    </div>
-                    <div>
-                        <i class="fa fa-user-clock text-4xl text-warning"></i>
-                    </div>
-                </div>
-
-                <!-- Departments -->
-                <div
-                    class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-secondary bg-white flex gap-2 items-center justify-between p-4">
-                    <div class="flex flex-col gap-2">
-                        <span class="font-semibold text-ternary/70 text-md">Departments</span>
-                        <span class="font-bold text-2xl text-ternary">6</span>
-                    </div>
-                    <div>
-                        <i class="fa fa-building-user text-4xl text-secondary"></i>
-                    </div>
-                </div>
-            </div>
             <div wire:show="showForm"
                  class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col shadow-lg shadow-gray-300 mt-4"
                  @if(!$showForm) style="display: none;" @endif>

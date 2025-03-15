@@ -46,7 +46,7 @@
 <table>
     <thead>
     <tr>
-        <th>ID</th>
+        <th>Sr. No.</th>
         <th>Name</th>
         <th>Email</th>
         <th>Phone</th>
@@ -58,7 +58,7 @@
     <tbody>
     @foreach($piList as $pi)
         <tr>
-            <td>{{ $pi->id }}</td>
+            <td>{{ $loop->iteration }}</td>
             <td>{{ $pi->getFullNameAttribute() }}</td>
             <td>{{ $pi->email }}</td>
             <td>{{ $pi->phone }}</td>

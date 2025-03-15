@@ -3,8 +3,10 @@
 namespace App\Livewire\Instruments;
 
 use App\Models\Instrument;
+use App\Models\InstrumentAccessorie;
 use App\Models\InstrumentPurchaseInfo;
 use Illuminate\Support\Facades\Storage;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Component;
@@ -12,17 +14,32 @@ use Livewire\Component;
 class InstrumentList extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     public $showForm = false;
     public $search = '';
     public $status = 'All';
     public $isEditing = false;
     public $instrumentId = null;
+    public $viewInstrumentDetailView = false;
+    public $viewInstrumentDetails;
+
+    // Accessory Modal Properties
+    public $showAccessoryModal = false;
+    public $selectedInstrument = null;
+    public $accessoryName = '';
+    public $accessoryModelNumber = '';
+    public $accessoryPurchaseDate = '';
+    public $accessoryPrice = '';
+    public $accessoryDescription = '';
+    public $accessoryStatus = 'available';
+    public $accessoryPhoto = null;
 
     // Event listener for the form submission
     protected $listeners = [
         'instrumentCreated' => 'handleInstrumentCreated',
         'instrumentUpdated' => 'handleInstrumentUpdated',
+        'hideViewInstrument' => 'handleHideViewInstrument',
     ];
 
     public function hideForm()
@@ -42,6 +59,20 @@ class InstrumentList extends Component
         $this->isEditing = true;
         $this->showForm = true;
         $this->dispatch('editInstrument', instrumentId: $id);
+    }
+
+    public function viewInstrument($id)
+    {
+        $this->viewInstrumentDetails = Instrument::findOrFail($id);
+
+        if ($this->viewInstrumentDetails) {
+            $this->viewInstrumentDetailView = true;
+        }
+    }
+
+    public function handleHideViewInstrument()
+    {
+        $this->viewInstrumentDetailView = false;
     }
 
     public function deleteInstrument($id)
@@ -101,6 +132,55 @@ class InstrumentList extends Component
         session()->flash('success', 'Status successfully updated.');
     }
 
+    public function addAccessories($id)
+    {
+        $this->selectedInstrument = Instrument::findOrFail($id);
+        $this->showAccessoryModal = true;
+    }
+
+    public function submitAccessory()
+    {
+        $this->validate([
+            'accessoryName' => 'required|min:3',
+            'accessoryModelNumber' => 'required',
+            'accessoryPurchaseDate' => 'required|date',
+            'accessoryPrice' => 'required|numeric',
+            'accessoryDescription' => 'required|min:10',
+            'accessoryStatus' => 'required|in:available,notAvailable',
+            'accessoryPhoto' => 'required|image|max:1024',
+        ]);
+
+        $photoPath = $this->accessoryPhoto->store('accessory-photos', 'public');
+
+        InstrumentAccessorie::create([
+            'instrument_id' => $this->selectedInstrument->id,
+            'name' => $this->accessoryName,
+            'model_number' => $this->accessoryModelNumber,
+            'purchase_date' => $this->accessoryPurchaseDate,
+            'price' => $this->accessoryPrice,
+            'description' => $this->accessoryDescription,
+            'status' => $this->accessoryStatus,
+            'photo' => $photoPath,
+        ]);
+
+        $this->showAccessoryModal = false;
+        $this->selectedInstrument = null;
+        $this->resetAccessoryFields();
+
+        $this->dispatch('toastSuccess', 'Accessory has been added successfully.');
+    }
+
+    private function resetAccessoryFields()
+    {
+        $this->accessoryName = '';
+        $this->accessoryModelNumber = '';
+        $this->accessoryPurchaseDate = '';
+        $this->accessoryPrice = '';
+        $this->accessoryDescription = '';
+        $this->accessoryStatus = 'available';
+        $this->accessoryPhoto = null;
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -150,8 +230,10 @@ class InstrumentList extends Component
         $query = $this->getFilteredQuery();
         $instruments = $query->paginate(10);
 
-        return view('livewire.instruments.instrument-list')
-            ->with('instruments', $instruments)
-            ->with('isEditing', $this->isEditing);
+        return view('livewire.instruments.instrument-list', [
+            'instruments' => $instruments,
+            'isEditing' => $this->isEditing,
+            'viewInstrumentDetails' => $this->viewInstrumentDetails,
+        ]);
     }
 }

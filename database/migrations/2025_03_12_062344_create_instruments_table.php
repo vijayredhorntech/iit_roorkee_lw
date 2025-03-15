@@ -16,6 +16,10 @@ return new class extends Migration {
             $table->string('serial_number');
             $table->longText('description');
             $table->string('operating_status');
+            $table->string('engineer_name');
+            $table->string('engineer_email');
+            $table->string('engineer_mobile');
+            $table->string('engineer_address');
             $table->integer('per_hour_cost');
             $table->integer('minimum_booking_duration');
             $table->integer('maximum_booking_duration');

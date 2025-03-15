@@ -55,8 +55,8 @@ class PiForm extends Component
             'department' => 'required|string',
             'designation' => 'required|string',
             'alt_email' => 'nullable|email|max:100',
-            'phone' => 'required|string|max:20',
-            'mobile' => 'nullable|string|max:20',
+            'phone' => 'required|string|max:20|regex:/^\d{1,15}$/',
+            'mobile' => 'nullable|string|max:20|regex:/^\d{1,15}$/',
             'specialization' => 'required|string|max:255',
             'qualification' => 'required|string',
             'office_address' => 'required|string',
@@ -144,6 +144,12 @@ class PiForm extends Component
             'email' => $this->email,
             'password' => Hash::make($password),
         ]);
+
+        if ($user) {
+            $user->assignRole('pi');
+        }
+
+
 
         $piData = [
             'user_id' => $user->id,

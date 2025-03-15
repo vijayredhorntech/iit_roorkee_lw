@@ -36,25 +36,10 @@
                            <span class="font-medium">
                             {{\Carbon\Carbon::parse($pi->joining_date)->format('d M, Y')}}
                         </span>
-                       </div>
-                   </div>
-
-                   <!-- Research Information -->
-                   <div class="xl:col-span-3 flex flex-col gap-2">
-                       <h3 class="font-semibold text-primary">Research Information</h3>
-                       <div class="grid xl:grid-cols-2 gap-4 text-sm">
-                           <div class="flex flex-col gap-2">
-                               <span class="text-gray-600">Research Areas:</span>
-                               <div class="flex flex-wrap gap-2">
-                                   <span class="px-2 py-1 bg-secondary/10 text-secondary rounded-full text-xs">{{$pi->specialization}}</span>
-                               </div>
-                           </div>
-                           <div class="flex flex-col gap-2">
-                               <span class="text-gray-600">Students in Lab:</span>
-                               <div class="flex flex-wrap gap-2">
-                                   <span onclick="document.getElementById('studentInLab').classList.toggle('hidden')" class="cursor-pointer px-2 py-1 bg-success/10 text-success rounded-full text-xs"><span class="font-semibold">02</span> - View All</span>
-                               </div>
-                           </div>
+                           <span class="text-gray-600">Research Area</span>
+                           <span class="font-medium">  {{$pi->specialization}} </span>
+                           <span class="text-gray-600">Students</span>
+                           <span class="font-medium">  {{$pi->students->count()}} </span>
                        </div>
                    </div>
                </div>
@@ -68,7 +53,7 @@
                    <span class="font-semibold text-warning text-lg">Recent Activities</span>
                </div>
                <div class="p-4">
-                   <div class="relative overflow-x-auto overflow-y-auto h-[500px]">
+                   <div class="relative overflow-x-auto overflow-y-auto h-[300px]">
                        <table class="w-full border-[2px] border-secondary/40 border-collapse">
                            <tr>
                                <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Date</td>

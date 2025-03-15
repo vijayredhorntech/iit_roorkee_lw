@@ -1,24 +1,5 @@
 <div>
-    @if (session()->has('success'))
-        <div id="successMessage"
-             class="absolute max-w-[600px] top-4 right-4 alert alert-success bg-green-100 border-l-4 border-green-500 text-green-700 px-4 py-2 mb-4 pr-20">
-            {{ session('success') }}
-            <div onclick="document.getElementById('successMessage').classList.add('hidden')"
-                 class="cursor-pointer bg-green-200 py-2 px-4 h-full flex justify-center absolute top-0 right-0 items-center">
-                <i class="fa fa-xmark "></i>
-            </div>
-        </div>
-    @endif
-    @if (session()->has('error'))
-        <div id="dangerMessage"
-             class="absolute max-w-[600px] top-4 right-4 alert alert-danger bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-2 mb-4 pr-20">
-            {{ session('error') }}
-            <div onclick="document.getElementById('dangerMessage').classList.add('hidden')"
-                 class="cursor-pointer bg-red-200 py-2 px-4 h-full flex justify-center absolute top-0 right-0 items-center">
-                <i class="fa fa-xmark "></i>
-            </div>
-        </div>
-    @endif
+
     <div class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col shadow-lg shadow-gray-300">
         <div class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20 flex justify-between">
             <span class="font-semibold text-primary text-xl">Bookings List</span>
@@ -100,6 +81,7 @@
                                 <br>
                             <span> <i class="fa-regular text-{{$booking->status == 'confirmed'?'success':'danger'}} fa-comment mr-2"></i>{{$booking->description??'--'}}</span>
                         </td>
+
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
                             <div class="flex gap-2">
 {{--                                <button wire:click="viewStudent({{ $student->id }})" title="View Details" class="bg-primary/20 text-primary h-6 w-6 flex justify-center items-center rounded-[3px] hover:bg-primary hover:text-white cursor-pointer transition ease-in duration-2000">--}}

@@ -87,7 +87,7 @@ class BookingList extends Component
     public function confirmCancellation()
     {
         $this->validate([
-            'cancellationRemark' => 'required|min:10',
+            'cancellationRemark' => 'required',
         ]);
 
         $this->selectedBooking->update([
@@ -157,9 +157,18 @@ class BookingList extends Component
 
     public function render()
     {
-        $query = Booking::query()->with(['student', 'instrument', 'slot'])->latest();
 
-//        $query = Booking::query()->with(['student', 'instrument', 'slot'])->where('student_id', 1)->latest();
+
+        if (auth()->user()->hasRole('super_admin')) {
+            $query = Booking::query()->with(['student', 'instrument', 'slot'])->latest();
+        } elseif (auth()->user()->hasRole('pi')) {
+            $query = Booking::whereHas('student', function($q) {
+                $q->where('principal_investigator_id', auth()->user()->principalInvestigators->first()->id);
+            })->with(['student', 'instrument', 'slot'])->latest();
+        } elseif (auth()->user()->hasRole('student')) {
+            $query = Booking::where('student_id', auth()->user()->students->first()->id)->with(['student', 'instrument', 'slot'])->latest();
+        }
+
 
         // Apply general search filter
         if ($this->search) {

@@ -1,3 +1,3 @@
 <x-app-layout>
-   This is dashbaord
+   This is super admin dashboard
 </x-app-layout>

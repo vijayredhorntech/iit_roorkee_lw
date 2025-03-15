@@ -17,9 +17,6 @@ class PiList extends Component
     public $showForm = false;
     public $search = '';
     public $status = 'All';
-    public $totalPi = 0;
-    public $activePi = 0;
-    public $inactivePi = 0;
     public $isEditing = false;
     public $piId = null;
     public $viewPiDetailView =false;
@@ -59,6 +56,16 @@ class PiList extends Component
     {
         // Find the PI
         $pi = PrincipalInvestigator::findOrFail($id);
+
+        // Check if PI has any associated students
+        $hasStudents = Student::where('principal_investigator_id', $id)->exists();
+
+        if ($hasStudents) {
+            session()->flash('error', 'Cannot delete Principal Investigator. They have associated students.');
+            return;
+        }
+
+        // If no students found, proceed with deletion
         $pi->user->delete();
         $pi->delete();
         $this->resetPage();
@@ -185,9 +192,6 @@ class PiList extends Component
 
         // Get paginated results
         $piList = $query->paginate(10);
-        $this->totalPi = PrincipalInvestigator::count();
-        $this->inactivePi = PrincipalInvestigator::where('status', 0)->count();
-        $this->activePi = PrincipalInvestigator::where('status', 1)->count();
 
         return view('livewire.pi.pi-list', [
             'piList' => $piList,

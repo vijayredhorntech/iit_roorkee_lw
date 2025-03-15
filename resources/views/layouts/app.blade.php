@@ -104,26 +104,34 @@
                     <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                 </div>
             </a>
-            <a href="{{route('pi.list')}}">
-                <div
-                    class=" {{Route::currentRouteName()==='pi.list'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
-                    <div class="flex items-center">
-                        <i class="fa fa-user mr-2 text-sm"></i>
-                        <span class="text-lg font-medium">Principle Investigator</span>
+
+            @can ('create pi')
+                <a href="{{route('pi.list')}}">
+                    <div
+                        class=" {{Route::currentRouteName()==='pi.list'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                        <div class="flex items-center">
+                            <i class="fa fa-user mr-2 text-sm"></i>
+                            <span class="text-lg font-medium">Principle Investigator</span>
+                        </div>
+                        <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                     </div>
-                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
-                </div>
-            </a>
-            <a href="{{route('lab.list')}}">
-                <div
-                    class=" {{Route::currentRouteName()==='lab.list'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
-                    <div class="flex items-center">
-                        <i class="fa-solid fa-flask mr-2 text-sm"></i>
-                        <span class="text-lg font-medium">Labs</span>
+                </a>
+                @endcan
+
+            @can ('create lab')
+                <a href="{{route('lab.list')}}">
+                    <div
+                        class=" {{Route::currentRouteName()==='lab.list'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-flask mr-2 text-sm"></i>
+                            <span class="text-lg font-medium">Labs</span>
+                        </div>
+                        <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                     </div>
-                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
-                </div>
-            </a>
+                </a>
+                @endcan
+
+            @can ('create student')
             <a href="{{route('student.list')}}">
                 <div
                     class=" {{Route::currentRouteName()==='student.list'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
@@ -134,6 +142,8 @@
                     <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                 </div>
             </a>
+            @endcan
+            @can ('create instrumentCategory')
             <a href="{{route('instrument.instrument-category')}}">
                 <div
                     class=" {{Route::currentRouteName()==='instrument.instrument-category'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
@@ -144,6 +154,9 @@
                     <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                 </div>
             </a>
+            @endcan
+
+            @can ('view instrument')
             <a href="{{route('instrument.instrument')}}">
                 <div
                     class=" {{Route::currentRouteName()==='instrument.instrument'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
@@ -154,6 +167,8 @@
                     <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                 </div>
             </a>
+            @endcan
+            @can('create bookings')
             <a href="{{route('bookings.create')}}">
                 <div
                     class=" {{Route::currentRouteName()==='bookings.create'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
@@ -164,6 +179,7 @@
                     <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                 </div>
             </a>
+            @endcan
 
             <!-- PI Section -->
 {{--            <div class="cursor-pointer group">--}}

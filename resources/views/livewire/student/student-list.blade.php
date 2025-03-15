@@ -1,54 +1,9 @@
 <div>
-    @if($viewStudentDetailView)
+
+
+   @if($viewStudentDetailView)
         <livewire:student.student-view :student="$viewStudentDetails" />
     @else
-        <div>
-            <!-- Statistics Cards -->
-            <div class="w-full grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
-                <!-- Total Students -->
-                <div class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-primary bg-white flex gap-2 items-center justify-between p-4">
-                    <div class="flex flex-col gap-2">
-                        <span class="font-semibold text-ternary/70 text-md">Total Students</span>
-                        <span class="font-bold text-2xl text-ternary">{{$totalStudents ?? 0}}</span>
-                    </div>
-                    <div>
-                        <i class="fa fa-users text-4xl text-primary"></i>
-                    </div>
-                </div>
-
-                <!-- Active Students -->
-                <div class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-success bg-white flex gap-2 items-center justify-between p-4">
-                    <div class="flex flex-col gap-2">
-                        <span class="font-semibold text-ternary/70 text-md">Active Students</span>
-                        <span class="font-bold text-2xl text-ternary">{{$activeStudents ?? 0}}</span>
-                    </div>
-                    <div>
-                        <i class="fa fa-user-check text-4xl text-success"></i>
-                    </div>
-                </div>
-
-                <!-- Inactive Students -->
-                <div class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-danger bg-white flex gap-2 items-center justify-between p-4">
-                    <div class="flex flex-col gap-2">
-                        <span class="font-semibold text-ternary/70 text-md">Inactive Students</span>
-                        <span class="font-bold text-2xl text-ternary">{{$inactiveStudents ?? 0}}</span>
-                    </div>
-                    <div>
-                        <i class="fa fa-user-clock text-4xl text-danger"></i>
-                    </div>
-                </div>
-
-                <!-- Departments -->
-                <div class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-warning bg-white flex gap-2 items-center justify-between p-4">
-                    <div class="flex flex-col gap-2">
-                        <span class="font-semibold text-ternary/70 text-md">Bookings</span>
-                        <span class="font-bold text-2xl text-ternary">{{$bookings ?? 0}}</span>
-                    </div>
-                    <div>
-                        <i class="fa-regular fa-calendar-plus text-4xl text-warning"></i>
-                    </div>
-                </div>
-            </div>
 
             <!-- Student Form Section -->
             <div class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col shadow-lg shadow-gray-300 mt-4" @if(!$showForm) style="display: none;" @endif>
@@ -108,19 +63,19 @@
                             <tr class="hover:bg-secondary/10 cursor-pointer transition ease-in duration-2000">
                                 <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$loop->iteration}}</td>
                                 <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
-                                  <div class="flex items-center gap-2">
-                                          <img src="{{ asset('storage/' . $student->profile_photo) }}"
-                                               alt="{{ $student->first_name }}" class="h-12 w-12 object-cover rounded-full"/>
-                                      <div>
-                                          <span class=" text-md">{{$student->first_name}} {{$student->last_name}}</span> <br>
-                                          <span class="mt-1 text-xs">{{ $student->academic_id }}</span>
-                                      </div>
-                                  </div>
+                                    <div class="flex items-center gap-2">
+                                        <img src="{{ asset('storage/' . $student->profile_photo) }}"
+                                             alt="{{ $student->first_name }}" class="h-12 w-12 object-cover rounded-full"/>
+                                        <div>
+                                            <span class=" text-md">{{$student->first_name}} {{$student->last_name}}</span> <br>
+                                            <span class="mt-1 text-xs">{{ $student->academic_id }}</span>
+                                        </div>
+                                    </div>
 
                                 </td>
                                 <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
-                                       <span><i class="fa fa-envelope mr-1 text-success"></i> {{ $student->email }}</span> <br>
-                                       <span><i class="fa fa-phone mr-1 text-danger"></i> {{ $student->mobile_number }}</span>
+                                    <span><i class="fa fa-envelope mr-1 text-success"></i> {{ $student->email }}</span> <br>
+                                    <span><i class="fa fa-phone mr-1 text-danger"></i> {{ $student->mobile_number }}</span>
                                 </td>
                                 <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
                                     <span><i class="fa fa-user mr-1 text-primary"></i> {{ $student->principalInvestigator->getFullNameAttribute() }}</span> <br>
@@ -163,7 +118,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm text-center">No students found</td>
+                                <td colspan="8" class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm text-center">No students found</td>
                             </tr>
                         @endforelse
                     </table>
@@ -173,6 +128,5 @@
                     </div>
                 </div>
             </div>
-        </div>
     @endif
 </div>

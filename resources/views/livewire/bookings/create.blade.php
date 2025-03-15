@@ -36,8 +36,8 @@
                             <span class="font-semibold text-primary text-md">Find the instrument</span>
                         </div>
                         <div class="w-full grid  gap-2 p-4 ">
-                            <!-- Student Selection -->
                             <div class="w-full flex flex-col gap-1">
+
                                 <label class="font-semibold text-primary">Select Student <span class="text-danger">*</span></label>
                                 <select wire:model.live="student" class="px-2 py-2 w-full text-sm font-medium bg-transparent border-[2px] border-primary/40 rounded focus:border-primary">
                                     <option value="">--Select Student--</option>
@@ -47,7 +47,6 @@
                                 </select>
                                 @error('student') <span class="text-red-500"> <i class="fa fa-exclamation-triangle mr-2"></i>{{ $message }}</span> @enderror
                             </div>
-
                             <!-- Instrument Selection -->
                             <div class="w-full flex flex-col gap-1">
                                 <label class="font-semibold text-primary">Select Instrument <span class="text-danger">*</span></label>

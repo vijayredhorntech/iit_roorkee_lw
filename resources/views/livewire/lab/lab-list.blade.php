@@ -1,6 +1,6 @@
 <div>
-    <div wire:show="showForm" @if(!$showForm) style="display: none;" @endif
-        class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col shadow-lg shadow-gray-300">
+
+    <div wire:show="showForm" @if(!$showForm) style="display: none;" @endif class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col shadow-lg shadow-gray-300">
 
         <div  class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20 flex justify-between">
             <span class="font-semibold text-primary text-xl">{{ $isEditing ? 'Edit Lab' : 'Lab Registration' }}</span>
@@ -14,6 +14,27 @@
             <livewire:lab.lab-form />
         </div>
     </div>
+
+    @if (session()->has('success'))
+        <div id="successMessage"
+             class="absolute max-w-[600px] top-4 right-4 alert alert-success bg-green-100 border-l-4 border-green-500 text-green-700 px-4 py-2 mb-4 pr-20">
+            {{ session('success') }}
+            <div onclick="document.getElementById('successMessage').classList.add('hidden')"
+                 class="cursor-pointer bg-green-200 py-2 px-4 h-full flex justify-center absolute top-0 right-0 items-center">
+                <i class="fa fa-xmark "></i>
+            </div>
+        </div>
+    @endif
+    @if (session()->has('error'))
+        <div id="dangerMessage"
+             class="absolute max-w-[600px] top-4 right-4 alert alert-danger bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-2 mb-4 pr-20">
+            {{ session('error') }}
+            <div onclick="document.getElementById('dangerMessage').classList.add('hidden')"
+                 class="cursor-pointer bg-red-200 py-2 px-4 h-full flex justify-center absolute top-0 right-0 items-center">
+                <i class="fa fa-xmark "></i>
+            </div>
+        </div>
+    @endif
     <div wire:show="!showForm" class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col shadow-lg shadow-gray-300 mt-6">
         <div class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20 flex justify-between">
             <span class="font-semibold text-primary text-xl">Lab List</span>
@@ -43,14 +64,11 @@
             <table class="w-full border-[2px] border-secondary/40 border-collapse mt-4" wire:loading.class="opacity-25">
                 <tr>
                     <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Sr. No.</td>
-                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Photo</td>
-                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Lab Name</td>
+                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Lab</td>
                     <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">In Charge</td>
-                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Contact Number</td>
-                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Department</td>
-                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Building</td>
-                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Floor/ Room Number</td>
-                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Type</td>
+                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Type/ Department</td>
+                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Location</td>
+                    <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Instruments</td>
                     <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Status</td>
                     <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Action</td>
                 </tr>
@@ -59,15 +77,31 @@
                     <tr class="hover:bg-secondary/10 cursor-pointer transition ease-in duration-2000">
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$loop->iteration}}</td>
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
-                            <img src="{{ asset('storage/' . $lab->lab_image) }}" alt="{{ $lab->lab_name }}" class="h-8 w-8 object-cover rounded-full"/>
+                            <div class="flex items-center gap-2">
+                                <img src="{{ asset('storage/' . $lab->lab_image) }}"
+                                     alt="{{ $lab->lab_name }}" class="h-12 w-12 object-cover rounded-full"/>
+                                <div>
+                                    <span class=" text-md">{{$lab->lab_name}}</span> <br>
+                                </div>
+                            </div>
                         </td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$lab->lab_name}}</td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$lab->principalInvestigator->first_name}}</td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$lab->contact_number}}</td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$lab->department}}</td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$lab->building}}</td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$lab->floor}}/ {{$lab->room_number}}</td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$lab->type}}</td>
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                            <span><i class="fa fa-user mr-1 text-success"></i> {{$lab->principalInvestigator->first_name}}</span> <br>
+                            <span><i class="fa fa-phone mr-1 text-danger"></i> {{$lab->contact_number}}</span>
+                        </td>
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                            <span><i class="fa fa-tag mr-1 text-success"></i> {{$lab->type}}</span> <br>
+                                <span><i class="fa fa-building mr-1 text-danger"></i> {{$lab->department}}</span>
+                        </td>
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                            <span>{{$lab->room_number}}/  {{$lab->floor}}</span> <br>
+                            <span> {{$lab->building}}</span>
+                        </td>
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                            <span class="cursor-pointer group"><i class="fa-solid fa-flask mr-1 text-success group-hover:text-danger transition ease-in duration-2000"></i>
+                                <span class="text-md font-bold">{{ $lab->instruments->count() }}</span>
+                            </span> <br>
+                        </td>
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
                             <button wire:click="toggleStatus({{ $lab->id }})" class="focus:outline-none">
                                 @if($lab->status == '0')

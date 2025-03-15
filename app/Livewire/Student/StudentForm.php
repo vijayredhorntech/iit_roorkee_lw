@@ -115,6 +115,9 @@ class StudentForm extends Component
             'email' => $this->email,
             'password' => Hash::make($password),
         ]);
+        if ($user) {
+            $user->assignRole('student');
+        }
 
         $studentData = [
             'user_id' => $user->id,
@@ -181,7 +184,8 @@ class StudentForm extends Component
 
     public function render()
     {
-        $principleInvestigators = PrincipalInvestigator::all();
+        // check if user role is super_admin then get all principal investigators else get only the principal investigator assigned to the user
+        $principleInvestigators = auth()->user()->hasRole('super_admin') ? PrincipalInvestigator::all() : PrincipalInvestigator::where('user_id', auth()->id())->get();
 
         return view('livewire.student.student-form')->with('principleInvestigators', $principleInvestigators);
     }

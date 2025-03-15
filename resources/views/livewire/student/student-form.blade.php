@@ -6,7 +6,7 @@
                 @foreach($principleInvestigators as $principleInvestigator)
                     <option value="{{$principleInvestigator->id}}">{{$principleInvestigator->first_name}} {{$principleInvestigator->last_name}}</option>
                 @endforeach
-             </select>
+            </select>
             @error('department') <span class="text-red-500"> <i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
         </div>
 

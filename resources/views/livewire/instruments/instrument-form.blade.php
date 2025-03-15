@@ -79,6 +79,7 @@
                        class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
                 @error('maximum_booking_duration') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
             </div>
+
             <div class="w-full lg:col-span-4 bg-primary/10 px-4 py-2 font-semibold text-primary mt-4 mb-4">
                 Purchase Information
             </div>
@@ -142,6 +143,35 @@
                        class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
                 @error('next_service_date') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
             </div>
+
+            <div class="w-full lg:col-span-4 bg-primary/10 px-4 py-2 font-semibold text-primary mt-4 mb-4">
+                Service Engineer Information
+            </div>
+            <div class="w-full flex flex-col gap-1">
+                <label class="font-semibold text-primary">Engineer Name  <span class="text-danger">*</span></label>
+                <input type="text" wire:model="engineer_name"  placeholder="Name"
+                       class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
+                @error('engineer_name') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
+            </div>
+            <div class="w-full flex flex-col gap-1">
+                <label class="font-semibold text-primary">Email  <span class="text-danger">*</span></label>
+                <input type="email" wire:model="engineer_email"  placeholder="Email"
+                       class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
+                @error('engineer_email') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
+            </div>
+            <div class="w-full flex flex-col gap-1">
+                <label class="font-semibold text-primary">Mobile Number  <span class="text-danger">*</span></label>
+                <input type="email" wire:model="engineer_mobile"  placeholder="Mobile Number" oninput="if(this.value.length > 15) this.value=this.value.slice(0,15)"
+                       class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
+                @error('engineer_mobile') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
+            </div>
+            <div class="w-full flex flex-col gap-1">
+                <label class="font-semibold text-primary"> Address <span class="text-danger">*</span></label>
+                <textarea wire:model="engineer_address" rows="2" placeholder="Address" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"></textarea>
+                @error('engineer_address') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
+            </div>
+
+
 
             <div class="w-full lg:col-span-4 bg-primary/10 px-4 py-2 font-semibold text-primary mt-4 mb-4">
                 Photos and Documents

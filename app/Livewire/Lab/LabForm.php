@@ -199,7 +199,10 @@ class LabForm extends Component
 
     public function render()
     {
-        $principleInvestigators = PrincipalInvestigator::all();
+
+
+        $principleInvestigators = auth()->user()->hasRole('super_admin') ? PrincipalInvestigator::all() : PrincipalInvestigator::where('user_id', auth()->user()->principalInvestigators->first()->id)->get();
+
         return view('livewire.lab.lab-form', [
             'principleInvestigators' => $principleInvestigators
         ]);

@@ -52,8 +52,14 @@ class LabList extends Component
     {
         // Find the Lab
         $lab = Lab::findOrFail($id);
-        $lab->delete();
 
+        if ($lab->instruments->count() > 0) {
+            session()->flash('error', 'Cannot delete Lab. It has associated instruments.');
+            return;
+        }
+
+        // If no instruments found, proceed with deletion
+        $lab->delete();
         session()->flash('success', 'Lab successfully deleted.');
     }
 

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +13,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create Roles
+        Role::create(['name' => 'super_admin']);
+        Role::create(['name' => 'pi']);
+        Role::create(['name' => 'student']);
+
+        // Run Permission Seeder
+        $this->call(PermissionSeeder::class);
+
         // Seed Users
-        \App\Models\User::factory()->create([
+        $user = \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'admin@admin.com',
         ]);
+
+        // Assign super_admin role to the user
+        $user->assignRole('super_admin');
 
         // Seed Slots
         $startTime = strtotime('09:00');

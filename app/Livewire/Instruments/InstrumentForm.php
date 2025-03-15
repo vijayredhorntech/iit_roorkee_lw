@@ -43,6 +43,10 @@ class InstrumentForm extends Component
     public $installation_date;
     public $warranty_period;
     public $next_service_date;
+    public $engineer_name;
+    public $engineer_email;
+    public $engineer_mobile;
+    public $engineer_address;
 
     public $isEditing = false;
     public $instrumentId = null;
@@ -78,7 +82,11 @@ class InstrumentForm extends Component
             'installation_date' => 'required|date',
             'warranty_period' => 'required|integer',
             'next_service_date' => 'required|date',
-            'video_link' => 'nullable|url'
+            'video_link' => 'nullable|url',
+            'engineer_name' => 'required|string|max:255',
+            'engineer_email' => 'required|email|max:255',
+            'engineer_mobile' => 'required|string|max:20',
+            'engineer_address' => 'required|string|max:500'
         ];
 
         if (!$this->isEditing) {
@@ -114,6 +122,10 @@ class InstrumentForm extends Component
         $this->minimum_booking_duration = $instrument->minimum_booking_duration;
         $this->maximum_booking_duration = $instrument->maximum_booking_duration;
         $this->video_link = $instrument->video_link;
+        $this->engineer_name = $instrument->engineer_name;
+        $this->engineer_email = $instrument->engineer_email;
+        $this->engineer_mobile = $instrument->engineer_mobile;
+        $this->engineer_address = $instrument->engineer_address;
 
         // Load existing files
         $this->existingPhotos = json_decode($instrument->photos) ?? [];
@@ -199,6 +211,10 @@ class InstrumentForm extends Component
         $instrument->operational_manual = $files['operational_manual'];
         $instrument->service_manual = $files['service_manual'];
         $instrument->video_link = $this->video_link;
+        $instrument->engineer_name = $this->engineer_name;
+        $instrument->engineer_email = $this->engineer_email;
+        $instrument->engineer_mobile = $this->engineer_mobile;
+        $instrument->engineer_address = $this->engineer_address;
         $instrument->save();
 
         // Create purchase info
@@ -240,6 +256,10 @@ class InstrumentForm extends Component
         $instrument->per_hour_cost = $this->per_hour_cost;
         $instrument->minimum_booking_duration = $this->minimum_booking_duration;
         $instrument->maximum_booking_duration = $this->maximum_booking_duration;
+        $instrument->engineer_name = $this->engineer_name;
+        $instrument->engineer_email = $this->engineer_email;
+        $instrument->engineer_mobile = $this->engineer_mobile;
+        $instrument->engineer_address = $this->engineer_address;
 
         // Update files only if new ones are uploaded
         if (!empty($files['photos'])) {
@@ -295,7 +315,8 @@ class InstrumentForm extends Component
             'video_link', 'manufacturer_name', 'vendor_name', 'manufacturing_date',
             'purchase_date', 'purchase_order_number', 'cost', 'funding_source',
             'installation_date', 'warranty_period', 'next_service_date', 'isEditing',
-            'instrumentId', 'existingPhotos', 'existingOperationalManual', 'existingServiceManual'
+            'instrumentId', 'existingPhotos', 'existingOperationalManual', 'existingServiceManual',
+            'engineer_name', 'engineer_email', 'engineer_mobile', 'engineer_address'
         ]);
 
         $this->operating_status = 'working';

@@ -177,8 +177,20 @@ class Create extends Component
 
     public function render()
     {
+
+        // if role is super_admin then show all students, if role is pi then show only students under that pi and if role is student then show only that student
+        if (auth()->user()->hasRole('super_admin')) {
+            $students = Student::orderBy('first_name')->get();
+        } elseif (auth()->user()->hasRole('pi')) {
+            $students = Student::where('principal_investigator_id', auth()->user()->principalInvestigators->first()->id)->orderBy('first_name')->get();
+        } else {
+            $students = Student::where('id', auth()->user()->students->first()->id)->orderBy('first_name')->get();
+        }
+
+
+
         return view('livewire.bookings.create', [
-            'students' => Student::orderBy('first_name')->get(),
+            'students' => $students,
             'instruments' => Instrument::orderBy('name')->get(),
         ]);
     }

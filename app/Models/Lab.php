@@ -25,6 +25,10 @@ class Lab extends Model
     ];
 
 
+    public function instruments()
+    {
+        return $this->hasMany(Instrument::class);
+    }
 
     public function principalInvestigator()
     {

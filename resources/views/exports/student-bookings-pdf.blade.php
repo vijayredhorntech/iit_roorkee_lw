@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bookings List</title>
+    <title>Student Bookings</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -38,7 +38,7 @@
 </head>
 <body>
 <div class="header">
-    <h2>Bookings List</h2>
+    <h2> {{$bookings->first()->student->first_name}} {{$bookings->first()->student->last_name}}'s Bookings</h2>
     <p>Generated on: {{ date('Y-m-d H:i:s') }}</p>
 </div>
 
@@ -46,22 +46,28 @@
     <thead>
     <tr>
         <th>Sr. No.</th>
-        <th>Student Name</th>
-        <th>Instrument</th>
         <th>Date</th>
+        <th>Instrument</th>
         <th>Slot</th>
         <th>Status</th>
+        <th>Cost</th>
     </tr>
     </thead>
     <tbody>
     @foreach($bookings as $booking)
         <tr>
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $booking->student->first_name }} {{ $booking->student->last_name }}</td>
+            <td>{{ \Carbon\Carbon::parse($booking->date)->format('d M, Y') }}</td>
             <td>{{ $booking->instrument->name }}</td>
-            <td>{{ $booking->date }}</td>
             <td>{{ $booking->slot->start_time }} - {{ $booking->slot->end_time }}</td>
-            <td class="status-{{ $booking->status }}">{{ ucfirst($booking->status) }}</td>
+            <td class="status-{{ $booking->status }}">
+                {{ ucfirst($booking->status) }}
+                @if($booking->description)
+                    <br>
+                    <small>{{ $booking->description }}</small>
+                @endif
+            </td>
+            <td>{{ $booking->instrument->per_hour_cost * (abs(\Carbon\Carbon::parse($booking->slot->end_time)->diffInMinutes(\Carbon\Carbon::parse($booking->slot->start_time))) / 60) }} ₹</td>
         </tr>
     @endforeach
     </tbody>

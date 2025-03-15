@@ -49,7 +49,7 @@
             </div>
             <div class="w-full flex flex-col gap-1">
                 <label class="font-semibold text-primary">Room Number <span class="text-danger">*</span></label>
-                <input type="text" name="room_number" wire:model="room_number" placeholder="Enter room number"
+                <input type="number" name="room_number" wire:model="room_number" placeholder="Enter room number"
                        class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
                 @error('room_number') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
             </div>
@@ -68,6 +68,7 @@
                         class="text-danger">*</span></label>
                 <select name="lab_manager" wire:model="manager"
                         class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                        <option value="">--- select lab manager ---</option>
                         @forelse ($principleInvestigators as $principleInvestigator)
                             <option value="{{ $principleInvestigator->id }}">{{ $principleInvestigator->user->name }}</option>
                         @empty
@@ -79,7 +80,7 @@
             <div class="w-full flex flex-col gap-1">
                 <label class="font-semibold text-primary">Contact Number <span
                         class="text-danger">*</span></label>
-                <input type="tel" name="contact_number" wire:model="contact_number"
+                <input type="phone" name="contact_number" wire:model="contact_number" oninput="if(this.value.length > 15) this.value=this.value.slice(0,15)"
                        placeholder="Enter contact number"
                        class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
                 @error('contact_number') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
@@ -87,7 +88,7 @@
             <div class="w-full flex flex-col gap-1">
                 <label class="font-semibold text-primary">Working Hours <span
                         class="text-danger">*</span></label>
-                <input type="text" name="working_hours" wire:model="working_hours"
+                <input type="number" name="working_hours" wire:model="working_hours"
                        placeholder="Enter working hours"
                        class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
                 @error('working_hours') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror

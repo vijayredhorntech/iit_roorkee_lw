@@ -46,7 +46,7 @@
 <table>
     <thead>
     <tr>
-        <th>ID</th>
+        <th>Sr. No.</th>
         <th>Name</th>
         <th>Department</th>
         <th>Building</th>
@@ -60,7 +60,7 @@
     <tbody>
     @foreach($labList as $lab)
         <tr>
-            <td>{{ $lab->id }}</td>
+            <td>{{ $loop->iteration }}</td>
             <td>{{ $lab->lab_name}}</td>
             <td>{{ $lab->department }}</td>
             <td>{{ $lab->building }}</td>
