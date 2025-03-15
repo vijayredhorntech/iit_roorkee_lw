@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
         // Seed Users
         $user = \App\Models\User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'Super Admin',
             'email' => 'admin@admin.com',
         ]);
 
