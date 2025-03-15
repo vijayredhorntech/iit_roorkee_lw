@@ -110,7 +110,7 @@
                             <span class="text-xs"><i class="fa fa-clock mr-1 text-danger"></i>  {{ $complaint->created_at->format('d/M/Y h:i A') }}</span>
                         </td>
 
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm w-[200px]">
                             <span class=" text-md">{{$complaint->subject}}</span> <br>
                             <span class="mt-1 text-xs">{{$complaint->description}}</span>
                         </td>
@@ -133,7 +133,7 @@
                                 <span class="bg-danger/20 text-danger px-2 py-0.5 rounded-full text-xs">Rejected</span>
                             @endif
                         </td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm w-[300px]">
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm w-[200px]">
                             <span class=" text-md">{{$complaint->remark??'-'}}</span> <br>
                         </td>
                         @can('update instrument complaint')
@@ -151,7 +151,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm text-center" colspan="7">No complaints found</td>
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm text-center" colspan="7">No pending complaints found</td>
                     </tr>
                 @endforelse
             </table>

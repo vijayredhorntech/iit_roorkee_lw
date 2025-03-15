@@ -61,6 +61,14 @@ Route::prefix('instrument')->name('instrument.')->group(function () {
         ->middleware(['auth'])
         ->middleware( 'can:view instrument complaint')
         ->name('complaints');
+
+//    Route::view('/service', 'pages.instruments.services')
+//        ->middleware(['auth'])
+//        ->middleware( 'can:view instrument services')
+//        ->name('service');
+    Route::view('/service', 'pages.instruments.services')
+        ->middleware(['auth'])
+        ->name('service');
 });
 
 Route::prefix('bookings')->name('bookings.')->group(function () {

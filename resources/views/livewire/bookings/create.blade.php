@@ -184,6 +184,6 @@
             </div>
         </div>
     @else
-             <livewire:bookings.booking-list/>
+            <livewire:bookings.booking-list/>
     @endif
 </div>

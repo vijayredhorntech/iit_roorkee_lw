@@ -7,8 +7,11 @@
                 <span class="font-semibold text-primary text-xl">Instrument Details</span>
 
                <div class="flex items-center gap-4">
+                   <button wire:click="showServiceTable" class="text-sm bg-warning/20 text-warning px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-warning/80 hover:text-white hover:bg-success hover:border-success/30 transition ease-in duration-2000">
+                       <i class="fa fa-hammer mr-2"></i>View Services
+                   </button>
                    <button wire:click="showForm" class="text-sm bg-success/20 text-success px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-success/80 hover:text-white hover:bg-success hover:border-success/30 transition ease-in duration-2000">
-                       <i class="fa fa-eye mr-2"></i>View Bookings
+                       <i class="fa fa-calendar-check mr-2"></i>View Bookings
                    </button>
                    <button wire:click="hideViewInstrument" class="text-sm bg-danger/20 text-danger px-2 py-0.5 mr-2 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-danger/80 hover:text-white hover:bg-danger hover:border-danger/30 transition ease-in duration-2000">
                        <i class="fa fa-xmark"></i>
@@ -16,6 +19,11 @@
                </div>
 
             </div>
+            @if($showServicesTable)
+                <livewire:instruments.instrument-service-record :instrument="$instrument" :for-single-instrument="true" />
+            @endif
+
+
             <div class="p-4 grid xl:grid-cols-2 gap-4">
                 <!-- Basic Info -->
                 <div class="flex flex-col gap-2">
@@ -99,6 +107,8 @@
                 </div>
             </div>
         </div>
+
+
         <!-- Photos & Documents Section -->
         <div class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col mt-4">
             <div class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20">
@@ -188,9 +198,11 @@
                 @endforelse
             </div>
         </div>
-         @else
-        <!-- Booking Details Table -->
-         <livewire:instruments.instrument-booking-table :instrument="$instrument"/>
+
     @endif
+         @if($showBookingDetailsTable)
+             <!-- Booking Details Table -->
+             <livewire:instruments.instrument-booking-table :instrument="$instrument"/>
+         @endif
 </div>
 

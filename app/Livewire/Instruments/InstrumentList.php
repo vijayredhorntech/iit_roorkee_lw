@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Instruments;
 
+use App\Mail\InstrumentServiceRequestMail;
 use App\Models\Instrument;
 use App\Models\InstrumentAccessorie;
 use App\Models\InstrumentPurchaseInfo;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -45,7 +47,13 @@ class InstrumentList extends Component
         'instrumentCreated' => 'handleInstrumentCreated',
         'instrumentUpdated' => 'handleInstrumentUpdated',
         'hideViewInstrument' => 'handleHideViewInstrument',
+        'toastSuccess' => 'showSuccessToast'
     ];
+
+    public function showSuccessToast($message)
+    {
+        session()->flash('success', $message);
+    }
 
     public function hideForm()
     {
@@ -132,6 +140,22 @@ class InstrumentList extends Component
         $this->selectedStatus = $instrument->operating_status;
         $this->showStatusModal = true;
     }
+
+
+    public function sendForService($id)
+    {
+        $instrument = Instrument::findOrFail($id);
+        $instrument->services()->create([
+            'instrument_id' => $id,
+            'service_type' => 'repair',
+            'status' => 'pending',
+        ]);
+
+         Mail::to($instrument->engineer_email)->send(new InstrumentServiceRequestMail($instrument));
+
+        session()->flash('success', 'Instrument sent for service.');
+    }
+
 
     public function confirmStatusUpdate()
     {

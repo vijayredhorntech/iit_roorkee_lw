@@ -17,7 +17,7 @@ class InstrumentComplaint extends Component
     public $search = '';
     public $studentSearch = '';
     public $instrumentSearch = '';
-    public $status = 'All';
+    public $status = 'pending';
 
     // Status Update Modal Properties
     public $showStatusModal = false;

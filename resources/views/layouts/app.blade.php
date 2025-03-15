@@ -193,6 +193,19 @@
             </a>
             @endcan
 
+{{--            @can('view instrument services')--}}
+            <a href="{{route('instrument.service')}}">
+                <div
+                    class=" {{Route::currentRouteName()==='instrument.service'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                    <div class="flex items-center">
+                        <i class="fa fa-hammer mr-2 text-sm"></i>
+                        <span class="text-lg font-medium">Instrument Services</span>
+                    </div>
+                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
+                </div>
+            </a>
+{{--            @endcan--}}
+
             <!-- PI Section -->
 {{--            <div class="cursor-pointer group">--}}
 {{--                <div--}}
@@ -263,9 +276,7 @@
 
             </div>
             <div class="w-max flex items-center">
-                <div
-                    class="rounded-full h-10 w-10 flex text-primary justify-center items-center hover:bg-primary/60 hover:text-white cursor-pointer transition ease-in duration-2000">
-                    <i class="fa fa-search" title="Search......"></i></div>
+
                 <div
                     class="rounded-full h-10 w-10 flex text-primary justify-center items-center hover:bg-primary/60 hover:text-white cursor-pointer transition ease-in duration-2000 relative">
                     <div
@@ -274,17 +285,15 @@
                     </div>
                     <i class="fa fa-bell" title="Search......"></i>
                 </div>
-                <div
-                    class="rounded-full h-10 w-10 flex text-primary justify-center items-center hover:bg-primary/60 hover:text-white cursor-pointer transition ease-in duration-2000">
-                    <i class="fa fa-gear animate-spin" title="Search......"></i></div>
+
                 <div class="flex items-center ̥gap-2 mx-4 cursor-pointer">
                     <div class="">
                         <img src="{{asset('assets/images/logo.png')}}" class="w-auto h-10 rounded-full"
                              alt="IIT Roorkee">
                     </div>
                     <div class="flex flex-col items-start justify-center ml-4">
-                        <span class="text-primary text-sm font-semibold">Super Admin</span>
-                        <span class="text-primary/90 text-xs font-semibol">IIT Roorkee</span>
+                        <span class="text-primary text-sm font-semibold">{{auth()->user()->name}}</span>
+                        <span class="text-primary/90 text-xs font-semibol">{{auth()->user()->email}}</span>
                     </div>
 
                 </div>

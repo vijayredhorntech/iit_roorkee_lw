@@ -50,6 +50,8 @@ class PermissionSeeder extends Seeder
             'raise instrument service request',
             'view instrument service request',
             'update instrument service request',
+
+            'view instrument services',
         ];
 
         foreach ($permissions as $permission) {
@@ -88,7 +90,8 @@ class PermissionSeeder extends Seeder
                 'delete bookings',
                 'create instrument complaint',
                 'view instrument complaint',
-                'update instrument complaint'
+                'update instrument complaint',
+                'view instrument services'
             ]
         );
 

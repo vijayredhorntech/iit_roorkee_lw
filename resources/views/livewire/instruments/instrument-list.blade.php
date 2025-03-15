@@ -1,4 +1,25 @@
 <div>
+    @if (session()->has('success'))
+        <div id="successMessage"
+             class="absolute max-w-[600px] top-4 right-4 alert alert-success bg-green-100 border-l-4 border-green-500 text-green-700 px-4 py-2 mb-4 pr-20">
+            {{ session('success') }}
+            <div onclick="document.getElementById('successMessage').classList.add('hidden')"
+                 class="cursor-pointer bg-green-200 py-2 px-4 h-full flex justify-center absolute top-0 right-0 items-center">
+                <i class="fa fa-xmark "></i>
+            </div>
+        </div>
+    @endif
+    @if (session()->has('error'))
+        <div id="dangerMessage"
+             class="absolute max-w-[600px] top-4 right-4 alert alert-danger bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-2 mb-4 pr-20">
+            {{ session('error') }}
+            <div onclick="document.getElementById('dangerMessage').classList.add('hidden')"
+                 class="cursor-pointer bg-red-200 py-2 px-4 h-full flex justify-center absolute top-0 right-0 items-center">
+                <i class="fa fa-xmark "></i>
+            </div>
+        </div>
+    @endif
+
     @if($viewInstrumentDetailView)
         <livewire:instruments.instrument-view :instrument="$viewInstrumentDetails"/>
     @else
@@ -100,19 +121,31 @@
                             </td>
 
                             <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
-                                <button wire:click="updateStatus({{ $instrument->id }})" class="focus:outline-none">
-                                    @if($instrument->operating_status == 'working')
-                                        <span class="bg-success/20 text-success px-2 py-0.5 rounded-full text-xs">Working</span>
-                                    @elseif($instrument->operating_status == 'under_maintenance')
-                                        <span class="bg-warning/20 text-warning px-2 py-0.5 rounded-full text-xs">Under Maintenance</span>
-                                    @elseif($instrument->operating_status == 'calibration_required')
-                                        <span class="bg-warning/20 text-warning px-2 py-0.5 rounded-full text-xs">Calibration Required</span>
-                                    @elseif($instrument->operating_status == 'faulty')
-                                        <span class="bg-danger/20 text-danger px-2 py-0.5 rounded-full text-xs">Faulty</span>
-                                    @else
-                                        <span class="bg-danger/20 text-danger px-2 py-0.5 rounded-full text-xs">Retired/Obsolete</span>
-                                    @endif
-                                </button>
+                               <div class="flex gap-4 items-center">
+                                   <button wire:click="updateStatus({{ $instrument->id }})" class="focus:outline-none">
+                                       @if($instrument->operating_status == 'working')
+                                           <span class="bg-success/20 text-success px-2 py-0.5 rounded-full text-xs">Working</span>
+                                       @elseif($instrument->operating_status == 'under_maintenance')
+                                           <span class="bg-warning/20 text-warning px-2 py-0.5 rounded-full text-xs">Under Maintenance</span>
+                                       @elseif($instrument->operating_status == 'calibration_required')
+                                           <span class="bg-warning/20 text-warning px-2 py-0.5 rounded-full text-xs">Calibration Required</span>
+                                       @elseif($instrument->operating_status == 'faulty')
+                                           <span class="bg-danger/20 text-danger px-2 py-0.5 rounded-full text-xs">Faulty</span>
+                                       @else
+                                           <span class="bg-danger/20 text-danger px-2 py-0.5 rounded-full text-xs">Retired/Obsolete</span>
+                                       @endif
+                                   </button>
+                                   @can ('create instrument')
+                                       @if($instrument->operating_status == 'under_maintenance')
+                                           @if(!$instrument->anyPendingService())
+                                               <button wire:click="sendForService({{ $instrument->id }})" title="Send for service" class="bg-danger/20 text-danger h-6 w-6 flex justify-center items-center rounded-[3px] hover:bg-danger hover:text-white cursor-pointer transition ease-in duration-2000">
+                                                   <i class="fa fa-paper-plane text-xs animate-bounce"></i>
+                                               </button>
+                                           @endif
+                                       @endif
+                                   @endcan
+                               </div>
+
                             </td>
                             @can ('create instrument')
                                 <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">

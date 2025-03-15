@@ -54,6 +54,11 @@ class Instrument extends Model
         return $this->hasOne(InstrumentPurchaseInfo::class);
     }
 
+    public function services()
+    {
+        return $this->hasMany(InstrumentService::class);
+    }
+
     public function getNextBookingDateTime()
     {
         $today = now()->toDateString();
@@ -131,5 +136,10 @@ class Instrument extends Model
         }
 
         return 'No available slots'; // No available slots found for today or tomorrow
+    }
+
+    public function anyPendingService()
+    {
+        return $this->services()->where('status', 'pending')->exists();
     }
 }

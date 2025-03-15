@@ -233,8 +233,7 @@ class InstrumentForm extends Component
         $purchaseInfo->save();
 
         $this->resetForm();
-        session()->flash('success', 'Instrument created successfully!');
-
+        $this->dispatch('toastSuccess', 'Instrument created successfully!');
         $this->dispatch('instrumentCreated');
     }
 
@@ -301,7 +300,7 @@ class InstrumentForm extends Component
         $purchaseInfo->save();
 
         $this->resetForm();
-        session()->flash('success', 'Instrument updated successfully!');
+        $this->dispatch('toastSuccess', 'Instrument updated successfully!');
 
         $this->dispatch('instrumentUpdated');
     }

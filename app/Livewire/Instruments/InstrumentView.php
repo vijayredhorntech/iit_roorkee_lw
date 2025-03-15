@@ -9,14 +9,21 @@ class InstrumentView extends Component
 {
     public $instrument;
     public $showBookingDetailsTable = false;
+    public $showServicesTable = false;
 
     protected $listeners = [
         'hideForm' => 'handleInstrumentBookingTable',
+        'hideServiceRecords' => 'toggleServiceRecords',
     ];
 
     public function handleInstrumentBookingTable()
     {
         $this->showBookingDetailsTable = !$this->showBookingDetailsTable;
+    }
+
+    public function showServiceTable()
+    {
+        $this->showServicesTable = !$this->showServicesTable;
     }
 
     public function hideViewInstrument()
@@ -27,6 +34,12 @@ class InstrumentView extends Component
     public function showForm()
     {
         $this->showBookingDetailsTable = !$this->showBookingDetailsTable;
+    }
+
+    public function toggleServiceRecords()
+    {
+        $this->showServiceRecords = !$this->showServiceRecords;
+        $this->dispatch('serviceRecordsToggled', $this->showServiceRecords);
     }
 
     public function render()
