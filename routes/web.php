@@ -46,14 +46,21 @@ Route::prefix('student')->name('student.')->group(function () {
 });
 
 Route::prefix('instrument')->name('instrument.')->group(function () {
+
     Route::view('/category', 'pages.instruments.category')
         ->middleware(['auth'])
         ->middleware( 'can:create instrumentCategory')
         ->name('instrument-category');
+
     Route::view('/instrument', 'pages.instruments.instrument')
         ->middleware(['auth'])
         ->middleware( 'can:view instrument')
         ->name('instrument');
+
+    Route::view('/complaint', 'pages.instruments.complaint')
+        ->middleware(['auth'])
+        ->middleware( 'can:view instrument complaint')
+        ->name('complaints');
 });
 
 Route::prefix('bookings')->name('bookings.')->group(function () {

@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('subject');
             $table->longText('description')->nullable();
             $table->string('image')->nullable();
+            $table->longText('remark')->nullable();
             $table->string('status')->default('pending')->comment('approved, rejected, pending');
             $table->timestamps();
         });

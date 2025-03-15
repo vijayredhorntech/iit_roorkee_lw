@@ -180,6 +180,18 @@
                 </div>
             </a>
             @endcan
+            @can('view instrument complaint')
+            <a href="{{route('instrument.complaints')}}">
+                <div
+                    class=" {{Route::currentRouteName()==='instrument.complaints'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                    <div class="flex items-center">
+                        <i class="fa fa-exclamation-triangle mr-2 text-sm"></i>
+                        <span class="text-lg font-medium">Instrument Complaint</span>
+                    </div>
+                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
+                </div>
+            </a>
+            @endcan
 
             <!-- PI Section -->
 {{--            <div class="cursor-pointer group">--}}

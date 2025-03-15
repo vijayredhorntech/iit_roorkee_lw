@@ -15,7 +15,8 @@ class InstrumentComplaint extends Model
         'subject',
         'description',
         'image',
-        'status'
+        'status',
+        'remark',
     ];
 
     public function instrument()

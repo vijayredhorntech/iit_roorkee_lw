@@ -24,6 +24,11 @@ class InstrumentList extends Component
     public $viewInstrumentDetailView = false;
     public $viewInstrumentDetails;
 
+    // Status Modal Properties
+    public $showStatusModal = false;
+    public $selectedInstrumentId = null; // Changed from selectedInstrumentUpdate
+    public $selectedStatus = '';
+
     // Accessory Modal Properties
     public $showAccessoryModal = false;
     public $selectedInstrument = null;
@@ -120,15 +125,28 @@ class InstrumentList extends Component
         session()->flash('success', 'Instrument updated successfully.');
     }
 
-    public function toggleStatus($id)
+    public function updateStatus($id)
     {
-        // Find the Instrument
         $instrument = Instrument::findOrFail($id);
+        $this->selectedInstrumentId = $id; // Store only the ID instead of the whole model
+        $this->selectedStatus = $instrument->operating_status;
+        $this->showStatusModal = true;
+    }
 
-        // Toggle status between 'working' and 'under_maintenance'
-        $instrument->operating_status = $instrument->operating_status === 'working' ? 'under_maintenance' : 'working';
-        $instrument->save();
+    public function confirmStatusUpdate()
+    {
+        $this->validate([
+            'selectedStatus' => 'required|in:working,under_maintenance,calibration_required,faulty,retired'
+        ]);
 
+        $instrument = Instrument::findOrFail($this->selectedInstrumentId); // Fetch the instrument when needed
+        $instrument->update([
+            'operating_status' => $this->selectedStatus
+        ]);
+
+        $this->showStatusModal = false;
+        $this->selectedInstrumentId = null; // Reset the ID instead of the model
+        $this->selectedStatus = '';
         session()->flash('success', 'Status successfully updated.');
     }
 

@@ -38,7 +38,6 @@
                 <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Student Name</td>
                 <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Date/ Slot</td>
                 <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Status</td>
-                <td class="border-[2px] border-secondary/40 bg-gray-100 px-4 py-1.5 text-ternary/80 font-bold text-md">Action</td>
             </tr>
 
             @forelse ($bookings as $booking)
@@ -59,7 +58,7 @@
                         <span><i class="fa fa-clock mr-1 text-danger"></i> {{$booking->slot->start_time}} - {{$booking->slot->end_time}}</span>
                     </td>
 
-                    <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                    <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm w-[600px]">
                                 <span> @if($booking->status == 'confirmed')
                                         <span class="bg-success/20 text-success px-2 py-0.5 rounded-full text-xs">Confirmed</span>
                                     @else
@@ -68,33 +67,6 @@
                         <br>
                         <span> <i class="fa-regular text-{{$booking->status == 'confirmed'?'success':'danger'}} fa-comment mr-2"></i>{{$booking->description??'--'}}</span>
                     </td>
-                    <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
-                                  <span> <i class="fa fa-calendar-check mr-1 text-success"></i> <span class="font-bold">
-                                      {{ $student->confirmedBookings->count() }}
-                                    </span></span> /  <i class="fa fa-calendar-xmark mr-1 text-danger"></i> <span class="font-bold">
-                                        {{ $student->cancelledBookings->count() }}
-
-                                    </span>
-                    </td>
-                    <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
-                        <div class="flex gap-2">
-                            {{--                                <button wire:click="viewStudent({{ $student->id }})" title="View Details" class="bg-primary/20 text-primary h-6 w-6 flex justify-center items-center rounded-[3px] hover:bg-primary hover:text-white cursor-pointer transition ease-in duration-2000">--}}
-                            {{--                                    <i class="fa fa-eye text-xs"></i>--}}
-                            {{--                                </button>--}}
-                            {{--                                <button wire:click="editStudent({{ $student->id }})" title="Edit" class="bg-warning/20 text-warning h-6 w-6 flex justify-center items-center rounded-[3px] hover:bg-warning hover:text-white cursor-pointer transition ease-in duration-2000">--}}
-                            {{--                                    <i class="fa fa-pen text-xs"></i>--}}
-                            {{--                                </button>--}}
-                            @if($booking->status === 'confirmed')
-                                <button wire:click="cancelBooking({{ $booking->id }})" title="Cancel Booking" class="bg-danger/20 text-danger h-6 w-6 flex justify-center items-center rounded-[3px] hover:bg-danger hover:text-white cursor-pointer transition ease-in duration-2000">
-                                    <i class="fa fa-times text-xs"></i>
-                                </button>
-                                <button wire:click="raiseComplaint({{ $booking->id }})" title="Raise Issue" class="bg-warning/20 text-warning h-6 w-6 flex justify-center items-center rounded-[3px] hover:bg-warning hover:text-white cursor-pointer transition ease-in duration-2000">
-                                    <i class="fa fa-exclamation-triangle text-xs"></i>
-                                </button>
-                            @endif
-                        </div>
-                    </td>
-
                 </tr>
             @empty
                 <tr>

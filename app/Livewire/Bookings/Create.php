@@ -187,11 +187,9 @@ class Create extends Component
             $students = Student::where('id', auth()->user()->students->first()->id)->orderBy('first_name')->get();
         }
 
-
-
         return view('livewire.bookings.create', [
             'students' => $students,
-            'instruments' => Instrument::orderBy('name')->get(),
+            'instruments' => Instrument::where('operating_status', 'working')->orderBy('name')->get(),
         ]);
     }
 }

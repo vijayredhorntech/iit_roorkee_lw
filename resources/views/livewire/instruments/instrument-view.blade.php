@@ -3,16 +3,17 @@
         <!-- Main Info Card -->
         <div class=" w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col">
             <div class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20 flex justify-between items-center">
-                <div class="flex items-center">
-                    <button wire:click="hideViewInstrument" class="text-sm bg-danger/20 text-danger px-2 py-0.5 mr-2 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-danger/80 hover:text-white hover:bg-danger hover:border-danger/30 transition ease-in duration-2000">
-                        <i class="fa fa-xmark"></i>
-                    </button>
-                <span class="font-semibold text-primary text-xl">Instrument Details</span>
-                </div>
 
-                <button wire:click="showForm" class="text-sm bg-success/20 text-success px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-success/80 hover:text-white hover:bg-success hover:border-success/30 transition ease-in duration-2000">
-                    <i class="fa fa-eye mr-2"></i>View Bookings
-                </button>
+                <span class="font-semibold text-primary text-xl">Instrument Details</span>
+
+               <div class="flex items-center gap-4">
+                   <button wire:click="showForm" class="text-sm bg-success/20 text-success px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-success/80 hover:text-white hover:bg-success hover:border-success/30 transition ease-in duration-2000">
+                       <i class="fa fa-eye mr-2"></i>View Bookings
+                   </button>
+                   <button wire:click="hideViewInstrument" class="text-sm bg-danger/20 text-danger px-2 py-0.5 mr-2 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-danger/80 hover:text-white hover:bg-danger hover:border-danger/30 transition ease-in duration-2000">
+                       <i class="fa fa-xmark"></i>
+                   </button>
+               </div>
 
             </div>
             <div class="p-4 grid xl:grid-cols-2 gap-4">
@@ -154,8 +155,42 @@
 
             </div>
         </div>
+
+        <!-- Accessories Section -->
+        <div class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col mt-4">
+            <div class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20">
+                <span class="font-semibold text-primary text-lg">Instrument Accessories</span>
+            </div>
+            <div class="p-4 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+                @forelse($instrument->instrumentAccessories as $accessory)
+                    <div class="border rounded-lg p-4 hover:shadow-lg transition flex flex-col gap-2">
+                        <div class="relative h-48 w-full overflow-hidden rounded-lg">
+                            <img src="{{asset('storage/'.$accessory->photo)}}" alt="{{$accessory->name}}" class="w-full h-full object-cover">
+                            <span class="absolute top-2 right-2 px-2 py-1 rounded text-xs font-semibold {{$accessory->status === 'available' ? 'bg-success/20 text-success' : 'bg-danger/20 text-danger'}}">
+                                {{ucfirst($accessory->status)}}
+                            </span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <h4 class="font-semibold text-primary">{{$accessory->name}}</h4>
+                            <div class="text-sm text-gray-600">
+                                <p><span class="font-medium">Model:</span> {{$accessory->model_number}}</p>
+                                <p><span class="font-medium">Purchase Date:</span> {{$accessory->purchase_date}}</p>
+                                <p><span class="font-medium">Price:</span> ₹{{$accessory->price}}</p>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">{{$accessory->description}}</p>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-span-full text-center py-8 text-gray-500">
+                        <i class="fa fa-box-open text-4xl mb-2"></i>
+                        <p>No accessories available for this instrument.</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
          @else
         <!-- Booking Details Table -->
          <livewire:instruments.instrument-booking-table :instrument="$instrument"/>
     @endif
 </div>
+

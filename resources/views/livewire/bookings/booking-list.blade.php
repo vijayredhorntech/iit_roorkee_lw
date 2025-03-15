@@ -72,7 +72,7 @@
                             <span><i class="fa fa-clock mr-1 text-danger"></i> {{$booking->slot->start_time}} - {{$booking->slot->end_time}}</span>
                         </td>
 
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm w-[300px]">
                                 <span> @if($booking->status == 'confirmed')
                                         <span class="bg-success/20 text-success px-2 py-0.5 rounded-full text-xs">Confirmed</span>
                                     @else

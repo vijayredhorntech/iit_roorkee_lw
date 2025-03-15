@@ -91,24 +91,26 @@
                             <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
                                 <div class="flex items-center gap-2">
                                     {{$instrument->instrumentAccessories->count()}}
+                                    @can ('create instrument')
                                     <button wire:click="addAccessories({{ $instrument->id }})" title="Add Accessory" class="bg-success/20 text-success h-6 w-6 flex justify-center items-center rounded-[3px] hover:bg-success hover:text-white cursor-pointer transition ease-in duration-2000">
                                         <i class="fa fa-plus text-xs"></i>
                                     </button>
+                                    @endcan
                                 </div>
                             </td>
 
                             <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
-                                <button wire:click="toggleStatus({{ $instrument->id }})" class="focus:outline-none">
+                                <button wire:click="updateStatus({{ $instrument->id }})" class="focus:outline-none">
                                     @if($instrument->operating_status == 'working')
                                         <span class="bg-success/20 text-success px-2 py-0.5 rounded-full text-xs">Working</span>
                                     @elseif($instrument->operating_status == 'under_maintenance')
                                         <span class="bg-warning/20 text-warning px-2 py-0.5 rounded-full text-xs">Under Maintenance</span>
                                     @elseif($instrument->operating_status == 'calibration_required')
-                                        <span class="bg-info/20 text-info px-2 py-0.5 rounded-full text-xs">Calibration Required</span>
+                                        <span class="bg-warning/20 text-warning px-2 py-0.5 rounded-full text-xs">Calibration Required</span>
                                     @elseif($instrument->operating_status == 'faulty')
                                         <span class="bg-danger/20 text-danger px-2 py-0.5 rounded-full text-xs">Faulty</span>
                                     @else
-                                        <span class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full text-xs">Retired/Obsolete</span>
+                                        <span class="bg-danger/20 text-danger px-2 py-0.5 rounded-full text-xs">Retired/Obsolete</span>
                                     @endif
                                 </button>
                             </td>
@@ -139,63 +141,97 @@
                 </div>
             </div>
         </div>
-
-        @if($showAccessoryModal)
+        @can ('create instrument')
+                @if($showAccessoryModal)
+                    <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+                            <h3 class="text-lg font-semibold mb-4 text-primary">Add Accessory</h3>
+                            <form wire:submit="submitAccessory">
+                                <div class="w-full flex flex-col gap-4">
+                                    <div class="w-full flex flex-col gap-1">
+                                        <label class="font-semibold text-primary">Name <span class="text-danger">*</span></label>
+                                        <input type="text" wire:model="accessoryName" placeholder="Enter accessory name" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                                        @error('accessoryName') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="w-full flex flex-col gap-1">
+                                        <label class="font-semibold text-primary">Model Number <span class="text-danger">*</span></label>
+                                        <input type="text" wire:model="accessoryModelNumber" placeholder="Enter model number" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                                        @error('accessoryModelNumber') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="w-full flex flex-col gap-1">
+                                        <label class="font-semibold text-primary">Purchase Date <span class="text-danger">*</span></label>
+                                        <input type="date" wire:model="accessoryPurchaseDate" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                                        @error('accessoryPurchaseDate') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="w-full flex flex-col gap-1">
+                                        <label class="font-semibold text-primary">Price <span class="text-danger">*</span></label>
+                                        <input type="number" wire:model="accessoryPrice" placeholder="Enter price" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                                        @error('accessoryPrice') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="w-full flex flex-col gap-1">
+                                        <label class="font-semibold text-primary">Description <span class="text-danger">*</span></label>
+                                        <textarea wire:model="accessoryDescription" rows="3" placeholder="Enter description" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"></textarea>
+                                        @error('accessoryDescription') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="w-full flex flex-col gap-1">
+                                        <label class="font-semibold text-primary">Status <span class="text-danger">*</span></label>
+                                        <select wire:model="accessoryStatus" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                                            <option value="available">Available</option>
+                                            <option value="notAvailable">Not Available</option>
+                                        </select>
+                                        @error('accessoryStatus') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                                    </div>
+                                    <div class="w-full flex flex-col gap-1">
+                                        <label class="font-semibold text-primary">Photo <span class="text-danger">*</span></label>
+                                        <input type="file" wire:model="accessoryPhoto" accept="image/*" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                                        <div wire:loading wire:target="accessoryPhoto" class="text-sm text-danger"><i class="fas fa-hourglass-half fa-spin mr-2"></i> Uploading file... Please wait</div>
+                                        @error('accessoryPhoto') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                <div class="flex justify-end space-x-3 mt-4">
+                                    <button type="button" wire:click="$set('showAccessoryModal', false)" class="text-sm bg-success/30 px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-success/90 text-ternary hover:text-white hover:bg-success hover:border-ternary/30 transition ease-in duration-2000">Back</button>
+                                    <button type="submit" class="text-sm bg-primary/30 px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-primary/90 text-ternary hover:text-white hover:bg-primary hover:border-primary/30 transition ease-in duration-2000">
+                                        <span wire:loading.remove wire:target="submitAccessory">Submit Accessory</span>
+                                        <span wire:loading wire:target="submitAccessory">Submitting... <i class="fas fa-hourglass-half fa-spin ml-2"></i></span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
+            @endcan
+        @endif
+        @can ('create instrument')
+        @if($showStatusModal)
             <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                 <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
-                    <h3 class="text-lg font-semibold mb-4 text-primary">Add Accessory</h3>
-                    <form wire:submit="submitAccessory">
+                    <h3 class="text-lg font-semibold mb-4 text-primary">Update Instrument Status</h3>
+                    <form wire:submit.prevent="confirmStatusUpdate">
                         <div class="w-full flex flex-col gap-4">
                             <div class="w-full flex flex-col gap-1">
-                                <label class="font-semibold text-primary">Name <span class="text-danger">*</span></label>
-                                <input type="text" wire:model="accessoryName" placeholder="Enter accessory name" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
-                                @error('accessoryName') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
-                            </div>
-                            <div class="w-full flex flex-col gap-1">
-                                <label class="font-semibold text-primary">Model Number <span class="text-danger">*</span></label>
-                                <input type="text" wire:model="accessoryModelNumber" placeholder="Enter model number" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
-                                @error('accessoryModelNumber') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
-                            </div>
-                            <div class="w-full flex flex-col gap-1">
-                                <label class="font-semibold text-primary">Purchase Date <span class="text-danger">*</span></label>
-                                <input type="date" wire:model="accessoryPurchaseDate" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
-                                @error('accessoryPurchaseDate') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
-                            </div>
-                            <div class="w-full flex flex-col gap-1">
-                                <label class="font-semibold text-primary">Price <span class="text-danger">*</span></label>
-                                <input type="number" wire:model="accessoryPrice" placeholder="Enter price" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
-                                @error('accessoryPrice') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
-                            </div>
-                            <div class="w-full flex flex-col gap-1">
-                                <label class="font-semibold text-primary">Description <span class="text-danger">*</span></label>
-                                <textarea wire:model="accessoryDescription" rows="3" placeholder="Enter description" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"></textarea>
-                                @error('accessoryDescription') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
-                            </div>
-                            <div class="w-full flex flex-col gap-1">
                                 <label class="font-semibold text-primary">Status <span class="text-danger">*</span></label>
-                                <select wire:model="accessoryStatus" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
-                                    <option value="available">Available</option>
-                                    <option value="notAvailable">Not Available</option>
+                                <select wire:model.live="selectedStatus" required class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                                    <option value="">Select Status</option>
+                                    <option value="working">Working</option>
+                                    <option value="under_maintenance">Under Maintenance</option>
+                                    <option value="calibration_required">Calibration Required</option>
+                                    <option value="faulty">Faulty</option>
+                                    <option value="retired">Retired/ Obsolete</option>
                                 </select>
-                                @error('accessoryStatus') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
-                            </div>
-                            <div class="w-full flex flex-col gap-1">
-                                <label class="font-semibold text-primary">Photo <span class="text-danger">*</span></label>
-                                <input type="file" wire:model="accessoryPhoto" accept="image/*" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
-                                <div wire:loading wire:target="accessoryPhoto" class="text-sm text-danger"><i class="fas fa-hourglass-half fa-spin mr-2"></i> Uploading file... Please wait</div>
-                                @error('accessoryPhoto') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
+                                @error('selectedStatus') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="flex justify-end space-x-3 mt-4">
-                            <button type="button" wire:click="$set('showAccessoryModal', false)" class="text-sm bg-success/30 px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-success/90 text-ternary hover:text-white hover:bg-success hover:border-ternary/30 transition ease-in duration-2000">Back</button>
+                            <button type="button" wire:click="$set('showStatusModal', false)" class="text-sm bg-success/30 px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-success/90 text-ternary hover:text-white hover:bg-success hover:border-ternary/30 transition ease-in duration-2000">Back</button>
                             <button type="submit" class="text-sm bg-primary/30 px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-primary/90 text-ternary hover:text-white hover:bg-primary hover:border-primary/30 transition ease-in duration-2000">
-                                <span wire:loading.remove wire:target="submitAccessory">Submit Accessory</span>
-                                <span wire:loading wire:target="submitAccessory">Submitting... <i class="fas fa-hourglass-half fa-spin ml-2"></i></span>
+                                <span wire:loading.remove wire:target="confirmStatusUpdate">Update Status</span>
+                                <span wire:loading wire:target="confirmStatusUpdate">Updating... <i class="fas fa-hourglass-half fa-spin ml-2"></i></span>
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
         @endif
-        @endif
+            @endcan
     </div>
+
