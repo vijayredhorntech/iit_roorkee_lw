@@ -120,7 +120,7 @@
                             </div>
 
                             @if(count($allSlots) > 0)
-                                <div class="grid grid-cols-5 gap-4 p-4">
+                                <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 gap-4 p-4">
                                     @foreach($allSlots as $slot)
                                         @php
                                             $isBooked = in_array($slot->id, $bookedSlotIds);

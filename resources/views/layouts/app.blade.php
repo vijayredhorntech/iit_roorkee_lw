@@ -5,7 +5,8 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Super Admin Dashboard</title>
+    <title>IIT-ROORKEE</title>
+    <link rel="icon" type="image/x-icon" href="{{asset('assets/images/whiteLogo.png')}}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,12 +79,12 @@
 </head>
 <body class="bg-gray-100 relative"
       style="font-family: 'Public Sans', serif; height: 100vh; width: 100%; overflow:hidden">
-<div id="sideBarOverlay" class="xl:w-0 lg:w-0  h-full bg-black/40 absolute top-0 left-0"
+<div id="sideBarOverlay" class="xl:w-0 lg:w-0  h-full bg-black/40 absolute top-0 left-0 z-40"
      onclick="document.getElementById('sideBarDiv').classList.toggle('hidden');document.getElementById('sideBarOverlay').classList.toggle('w-full');"></div>
 
 <div class="flex w-full ">
     <div id="sideBarDiv"
-         class="z-20 w-72 p-4 h-[100vh] bg-primary overflow-x-hidden overflow-y-auto flex-none xl:static lg:static absolute top-0 left-0 xl:block lg:block hidden ">
+         class="z-20 w-72 p-4 h-[100vh] bg-primary overflow-x-hidden overflow-y-auto flex-none xl:static lg:static absolute top-0 left-0 xl:block lg:block hidden z-50">
         <div
             class="w-full flex flex-col justify-center items-center border-b-[1px] pb-2 border-b-gray-100/20 shadow-lg shadow-gray-700/10">
             <img src="{{asset('assets/images/whiteLogo.png')}}" class="h-32 w-auto" alt="Cloud Travel">
@@ -94,16 +95,18 @@
         </div>
 
         <div class="w-full flex flex-col mt-12 gap-3">
-            <a href="{{route('dashboard')}}">
-                <div
-                    class=" {{Route::currentRouteName()==='dashboard'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
-                    <div class="flex items-center">
-                        <i class="fa fa-tv mr-2 text-sm"></i>
-                        <span class="text-lg font-medium">Dashboard</span>
+            @if(auth()->user()->hasRole('super_admin'))
+                <a href="{{route('dashboard')}}">
+                    <div
+                        class=" {{Route::currentRouteName()==='dashboard'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                        <div class="flex items-center">
+                            <i class="fa fa-tv mr-2 text-sm"></i>
+                            <span class="text-lg font-medium">Dashboard</span>
+                        </div>
+                        <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                     </div>
-                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
-                </div>
-            </a>
+                </a>
+            @endif
 
             @can ('create pi')
                 <a href="{{route('pi.list')}}">
@@ -116,7 +119,7 @@
                         <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                     </div>
                 </a>
-                @endcan
+            @endcan
 
             @can ('create lab')
                 <a href="{{route('lab.list')}}">
@@ -129,71 +132,70 @@
                         <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                     </div>
                 </a>
-                @endcan
+            @endcan
 
             @can ('create student')
-            <a href="{{route('student.list')}}">
-                <div
-                    class=" {{Route::currentRouteName()==='student.list'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
-                    <div class="flex items-center">
-                        <i class="fa fa-user-graduate mr-2 text-sm"></i>
-                        <span class="text-lg font-medium">Students</span>
+                <a href="{{route('student.list')}}">
+                    <div
+                        class=" {{Route::currentRouteName()==='student.list'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                        <div class="flex items-center">
+                            <i class="fa fa-user-graduate mr-2 text-sm"></i>
+                            <span class="text-lg font-medium">Students</span>
+                        </div>
+                        <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                     </div>
-                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
-                </div>
-            </a>
+                </a>
             @endcan
             @can ('create instrumentCategory')
-            <a href="{{route('instrument.instrument-category')}}">
-                <div
-                    class=" {{Route::currentRouteName()==='instrument.instrument-category'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
-                    <div class="flex items-center">
-                        <i class="fa fa-layer-group mr-2 text-sm"></i>
-                        <span class="text-lg font-medium">Instrument Category</span>
+                <a href="{{route('instrument.instrument-category')}}">
+                    <div
+                        class=" {{Route::currentRouteName()==='instrument.instrument-category'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                        <div class="flex items-center">
+                            <i class="fa fa-layer-group mr-2 text-sm"></i>
+                            <span class="text-lg font-medium">Instrument Category</span>
+                        </div>
+                        <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                     </div>
-                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
-                </div>
-            </a>
+                </a>
             @endcan
 
             @can ('view instrument')
-            <a href="{{route('instrument.instrument')}}">
-                <div
-                    class=" {{Route::currentRouteName()==='instrument.instrument'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
-                    <div class="flex items-center">
-                        <i class="fa fa-microscope mr-2 text-sm"></i>
-                        <span class="text-lg font-medium">Instruments</span>
+                <a href="{{route('instrument.instrument')}}">
+                    <div
+                        class=" {{Route::currentRouteName()==='instrument.instrument'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                        <div class="flex items-center">
+                            <i class="fa fa-microscope mr-2 text-sm"></i>
+                            <span class="text-lg font-medium">Instruments</span>
+                        </div>
+                        <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                     </div>
-                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
-                </div>
-            </a>
+                </a>
             @endcan
             @can('create bookings')
-            <a href="{{route('bookings.create')}}">
-                <div
-                    class=" {{Route::currentRouteName()==='bookings.create'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
-                    <div class="flex items-center">
-                        <i class="fa fa-calendar-days mr-2 text-sm"></i>
-                        <span class="text-lg font-medium">Bookings</span>
+                <a href="{{route('bookings.create')}}">
+                    <div
+                        class=" {{Route::currentRouteName()==='bookings.create'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                        <div class="flex items-center">
+                            <i class="fa fa-calendar-days mr-2 text-sm"></i>
+                            <span class="text-lg font-medium">Bookings</span>
+                        </div>
+                        <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                     </div>
-                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
-                </div>
-            </a>
+                </a>
             @endcan
             @can('view instrument complaint')
-            <a href="{{route('instrument.complaints')}}">
-                <div
-                    class=" {{Route::currentRouteName()==='instrument.complaints'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
-                    <div class="flex items-center">
-                        <i class="fa fa-exclamation-triangle mr-2 text-sm"></i>
-                        <span class="text-lg font-medium">Instrument Complaint</span>
+                <a href="{{route('instrument.complaints')}}">
+                    <div
+                        class=" {{Route::currentRouteName()==='instrument.complaints'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                        <div class="flex items-center">
+                            <i class="fa fa-exclamation-triangle mr-2 text-sm"></i>
+                            <span class="text-lg font-medium">Instrument Complaint</span>
+                        </div>
+                        <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                     </div>
-                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
-                </div>
-            </a>
+                </a>
             @endcan
-
-{{--            @can('view instrument services')--}}
+            @can('view instrument services')
             <a href="{{route('instrument.service')}}">
                 <div
                     class=" {{Route::currentRouteName()==='instrument.service'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
@@ -204,105 +206,90 @@
                     <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
                 </div>
             </a>
-{{--            @endcan--}}
-
-            <!-- PI Section -->
-{{--            <div class="cursor-pointer group">--}}
-{{--                <div--}}
-{{--                    onclick="document.getElementById('piDiv').classList.toggle('hidden');document.getElementById('studentArrow').classList.toggle('-rotate-90')"--}}
-{{--                    class="{{request()->is('pi/*') ?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">--}}
-{{--                    <div class="flex items-center">--}}
-{{--                        <i class="fa fa-user mr-2 text-sm"></i>--}}
-{{--                        <span class="text-lg font-medium">Principle Investigator</span>--}}
-{{--                    </div>--}}
-{{--                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>--}}
-{{--                    <i class="fa-solid fa-chevron-down text-lg group-hover:hidden text-white/90 absolute top-[50%] -translate-y-[50%] z-10 right-0"></i>--}}
-{{--                </div>--}}
-{{--                <ul id="piDiv" class="pl-10 mt-2 flex flex-col gap-2 hidden">--}}
-{{--                    <a href="{{route('dashboard')}}">--}}
-{{--                        <li class="{{request()->is('super-admin/dashboard') ? 'bg-primaryLight/10' : 'bg-primary'}}   text-white/90 w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative hover:bg-primaryLight/10 transition ease-in duration-2000">--}}
-{{--                            <div class="flex items-center">--}}
-{{--                                <i class="fa fa-plus mr-2 text-sm"></i>--}}
-{{--                                <span class="text-lg font-medium">Create</span>--}}
-{{--                            </div>--}}
-{{--                            <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>--}}
-{{--                        </li>--}}
-{{--                    </a>--}}
-{{--                    <a href="{{route('dashboard')}}">--}}
-{{--                        <li class="{{request()->is('super-admin/dashboard') ? 'bg-primaryLight/10' : 'bg-primary'}}   text-white/90 w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative hover:bg-primaryLight/10 transition ease-in duration-2000">--}}
-{{--                            <div class="flex items-center">--}}
-{{--                                <i class="fa fa-eye mr-2 text-sm"></i>--}}
-{{--                                <span class="text-lg font-medium">View</span>--}}
-{{--                            </div>--}}
-{{--                            <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>--}}
-{{--                        </li>--}}
-{{--                    </a>--}}
-{{--                </ul>--}}
-{{--            </div>--}}
-
-
-            {{--            <a href="{{route('logout')}}">--}}
-            {{--                <div class=" {{Route::currentRouteName()==='book_instrument'?'bg-primaryLight/90 border-[2px] border-white text-primary':'bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">--}}
-            {{--                    <div class="flex items-center">--}}
-            {{--                        <i class="fa fa-ticket mr-2 text-sm"></i>--}}
-            {{--                        <span class="text-lg font-medium">Logout</span>--}}
-            {{--                    </div>--}}
-            {{--                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>--}}
-            {{--                </div>--}}
-            {{--            </a>--}}
-
+          @endcan
 
         </div>
 
-
-        <div class="w-full flex flex-col mt-20">
-            <span class="text-white/90 text-xs font-semibold">Developed by:</span>
-            <a href="https://himsoftsolution.com" target="_blank"
-               class="mt-2 text-primaryLight text-md font-semibold hover:text-secondaryLight transition ease-in duration-2000">Him
-                Soft Solution</a>
-        </div>
     </div>
 
 
     <div class=" h-[100vh] w-full overflow-y-auto">
         <div
-            class="w-full px-4 py-2 flex xl:justify-between lg:justify-between md:justify-between sm:justify-between justify-between items-center bg-white sticky top-0 border-b-[2px] border-b-primary/20">
+            class="w-full px-4 py-2 flex xl:justify-between lg:justify-between md:justify-between sm:justify-between justify-between items-center bg-white sticky top-0 border-b-[2px] border-b-primary/20 z-20">
             <div class="flex items-center">
                 <div class="rounded-full h-10 w-10 xl:hidden lg:hidden flex justify-center items-center text-secondary"
                      onclick="document.getElementById('sideBarDiv').classList.toggle('hidden');
                              document.getElementById('sideBarOverlay').classList.toggle('w-full');"><i
                         class="fa fa-bars text-xl" title="Search......"></i></div>
-                <span class="font-bold text-primary text-xl xl:block lg:block md:block sm:block hidden">Super Admin Dashboard</span>
+                <span class="font-bold text-primary text-xl xl:block lg:block md:block sm:block hidden">
+                   @if(auth()->user()->hasRole('super_admin'))
+                    Super Admin Dashboard
+                    @elseif(auth()->user()->hasRole('pi'))
+                    Principle Investigator Dashboard
+                    @else
+                    Student Dashboard
+                    @endif
+                </span>
 
             </div>
             <div class="w-max flex items-center">
 
-                <div
-                    class="rounded-full h-10 w-10 flex text-primary justify-center items-center hover:bg-primary/60 hover:text-white cursor-pointer transition ease-in duration-2000 relative">
-                    <div
-                        class="absolute top-0 right-0 text-xs text-white bg-primary font-semibol h-4 w-4 rounded-full flex justify-center items-center">
-                        5
-                    </div>
-                    <i class="fa fa-bell" title="Search......"></i>
-                </div>
+{{--                <div--}}
+{{--                    class="rounded-full h-10 w-10 flex text-primary justify-center items-center hover:bg-primary/60 hover:text-white cursor-pointer transition ease-in duration-2000 relative">--}}
+{{--                    <div--}}
+{{--                        class="absolute top-0 right-0 text-xs text-white bg-primary font-semibol h-4 w-4 rounded-full flex justify-center items-center">--}}
+{{--                        5--}}
+{{--                    </div>--}}
+{{--                    <i class="fa fa-bell" title="Search......"></i>--}}
+{{--                </div>--}}
 
-                <div class="flex items-center ̥gap-2 mx-4 cursor-pointer">
+                <div class="flex items-center ̥gap-2 mx-4 cursor-pointer relative">
                     <div class="">
-                        <img src="{{asset('assets/images/logo.png')}}" class="w-auto h-10 rounded-full"
-                             alt="IIT Roorkee">
+                        @if(auth()->user()->hasRole('super_admin'))
+                            <img src="{{asset('assets/images/logo.png')}}" class="w-auto h-10 rounded-full"
+                                 alt="{{auth()->user()->name}}">
+                        @elseif(auth()->user()->hasRole('pi'))
+                            <img
+                                src="{{asset('storage/'. auth()->user()->principalInvestigators->first()->profile_photo)}}"
+                                class="w-auto h-10 rounded-full"
+                                alt="{{auth()->user()->name}}">
+                        @else
+                            <img src="{{asset('storage/'. auth()->user()->students->first()->profile_photo)}}"
+                                 class="w-auto h-10 rounded-full"
+                                 alt="{{auth()->user()->name}}">
+                        @endif
                     </div>
                     <div class="flex flex-col items-start justify-center ml-4">
                         <span class="text-primary text-sm font-semibold">{{auth()->user()->name}}</span>
                         <span class="text-primary/90 text-xs font-semibol">{{auth()->user()->email}}</span>
                     </div>
+                    @if(auth()->user())
+                        <livewire:pages.auth.logout/>
+                    @endif
 
                 </div>
             </div>
         </div>
 
-        <div class="p-4 w-full relative">
+        <div class="p-4 w-full relative pb-12" style="min-height: 90vh">
             {{ $slot }}
         </div>
+
+        <div class="w-full px-4 py-2 flex xl:justify-between lg:justify-between md:justify-between flex-wrap items-center bg-white sticky bottom-0 border-t-[2px] border-b-primary/20">
+            <div class="flex items-center gap-2">
+                <span class="text-black/70 text-sm font-semibold">
+                    &copy; {{date('Y')}}
+                </span>
+                <span class="text-primary text-sm font-semibold hover:text-danger transition ease-in duration-2000">IIT ROORKEE</span>
+            </div>
+            <div>
+                <span class="text-black/70 text-sm font-semibold">Developed by:</span>
+                <a href="https://himsoftsolution.com" target="_blank"
+                   class="mt-2 text-primary text-md font-semibold hover:text-danger transition ease-in duration-2000">Him
+                    Soft Solution</a>
+            </div>
+        </div>
+
     </div>
 </div>
 

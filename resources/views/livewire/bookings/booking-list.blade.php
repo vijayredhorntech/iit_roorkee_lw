@@ -1,7 +1,7 @@
 <div>
 
     <div class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 flex-col shadow-lg shadow-gray-300">
-        <div class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20 flex justify-between">
+        <div class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20 flex justify-between flex-wrap">
             <span class="font-semibold text-primary text-xl">Bookings List</span>
             <button wire:click="showForm" class="text-sm bg-primary/20 text-primary px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-primary/80 hover:text-white hover:bg-primary hover:border-primary/30 transition ease-in duration-2000">
                 <i class="fa fa-plus mr-2"></i>Create New Booking
@@ -56,30 +56,34 @@
                 @forelse ($bookings as $booking)
                     <tr class="hover:bg-secondary/10 cursor-pointer transition ease-in duration-2000">
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$loop->iteration}}</td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm w-[300px]">
                             <div class="flex items-center gap-2">
                                 <img src="{{ asset('storage/' . $booking->student->profile_photo) }}"
                                      alt="{{ $booking->student->first_name }}" class="h-12 w-12 object-cover rounded-full"/>
-                                <div>
-                                    <span class=" text-md">{{$booking->student->first_name}} {{$booking->student->last_name}}</span> <br>
+                                <div class="w-max">
+                                    <span class=" text-md text-center">{{$booking->student->first_name}} {{$booking->student->last_name}}</span> <br>
                                     <span class="mt-1 text-xs">{{ $booking->student->academic_id }}</span>
                                 </div>
                             </div>
                         </td>
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$booking->instrument->name}}</td>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">
-                            <span><i class="fa fa-calendar-days mr-1 text-success"></i> {{$booking->date}}</span> <br>
-                            <span><i class="fa fa-clock mr-1 text-danger"></i> {{$booking->slot->start_time}} - {{$booking->slot->end_time}}</span>
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm w-[300px]">
+                           <div class="w-max">
+                               <span><i class="fa fa-calendar-days mr-1 text-success"></i> {{$booking->date}}</span> <br>
+                               <span><i class="fa fa-clock mr-1 text-danger"></i> {{$booking->slot->start_time}} - {{$booking->slot->end_time}}</span>
+                           </div>
                         </td>
 
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm w-[300px]">
-                                <span> @if($booking->status == 'confirmed')
-                                        <span class="bg-success/20 text-success px-2 py-0.5 rounded-full text-xs">Confirmed</span>
-                                    @else
-                                        <span class="bg-danger/20 text-danger px-2 py-0.5 rounded-full text-xs">Cancelled</span>
-                                    @endif</span>
-                                <br>
-                            <span> <i class="fa-regular text-{{$booking->status == 'confirmed'?'success':'danger'}} fa-comment mr-2"></i>{{$booking->description??'--'}}</span>
+                               <div class="w-max" style="max-width: 300px">
+                                    <span> @if($booking->status == 'confirmed')
+                                            <span class="bg-success/20 text-success px-2 py-0.5 rounded-full text-xs">Confirmed</span>
+                                        @else
+                                            <span class="bg-danger/20 text-danger px-2 py-0.5 rounded-full text-xs">Cancelled</span>
+                                        @endif</span>
+                                   <br>
+                                   <span> <i class="fa-regular text-{{$booking->status == 'confirmed'?'success':'danger'}} fa-comment mr-2"></i>{{$booking->description??'--'}}</span>
+                               </div>
                         </td>
 
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">

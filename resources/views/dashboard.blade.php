@@ -1,3 +1,3 @@
 <x-app-layout>
-   This is super admin dashboard
+    <livewire:super-admin-dashboard/>
 </x-app-layout>

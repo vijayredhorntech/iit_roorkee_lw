@@ -10,9 +10,9 @@ Route::get('/', function () {
     if ($user->hasRole('super_admin')) {
         return view('dashboard');
     } elseif ($user->hasRole('pi')) {
-        return view('piDashboard');
+        return redirect()->route('student.list');
     } elseif ($user->hasRole('student')) {
-        return view('studentDashboard');
+        return redirect()->route('bookings.create');
     }
 
     return redirect('/login'); // Default redirect if no role matches
@@ -62,13 +62,11 @@ Route::prefix('instrument')->name('instrument.')->group(function () {
         ->middleware( 'can:view instrument complaint')
         ->name('complaints');
 
-//    Route::view('/service', 'pages.instruments.services')
-//        ->middleware(['auth'])
-//        ->middleware( 'can:view instrument services')
-//        ->name('service');
     Route::view('/service', 'pages.instruments.services')
         ->middleware(['auth'])
+        ->middleware( 'can:view instrument services')
         ->name('service');
+
 });
 
 Route::prefix('bookings')->name('bookings.')->group(function () {
