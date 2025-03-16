@@ -219,8 +219,19 @@
                 </div>
             </a>
           @endcan
+                <div onclick="document.getElementById('passwordUpdateDiv').classList.toggle('hidden')"  class="cursor-pointer border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10 w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                    <div class="flex items-center">
+                        <i class="fa fa-lock-open mr-2 text-sm"></i>
+                        <span class="text-lg font-medium">Update Password</span>
+                    </div>
+                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
+                </div>
 
         </div>
+        <div class="hidden" id="passwordUpdateDiv">
+            <livewire:accounts.update-password/>
+        </div>
+
 
     </div>
 

@@ -10,7 +10,6 @@
                  @forelse(App\Models\Title::all() as $title)
                     <option value="{{$title->title}}">{{$title->title}}</option>
                 @empty
-                    <option value="">No title found</option>
                 @endforelse
             </select>
             @error('title') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
@@ -32,7 +31,6 @@
                 @forelse(App\Models\Department::all() as $department)
                     <option value="{{$department->title}}">{{$department->title}}</option>
                 @empty
-                    <option value="">No department found</option>
                 @endforelse
             </select>
             @error('department') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
@@ -44,7 +42,6 @@
                 @forelse(App\Models\Designation::all() as $designation)
                     <option value="{{$designation->title}}">{{$designation->title}}</option>
                 @empty
-                    <option value="">No designation found</option>
                 @endforelse
             </select>
             @error('designation') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
@@ -83,7 +80,6 @@
                 @forelse(App\Models\Qualification::all() as $qualification)
                     <option value="{{$qualification->title}}">{{$qualification->title}}</option>
                 @empty
-                    <option value="">No qualification found</option>
                 @endforelse
             </select>
             @error('qualification') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror

@@ -65,7 +65,7 @@ class PiForm extends Component
         // Only require photo during creation, not during editing unless a new one is uploaded
         if (!$this->isEditing) {
             $rules['profile_photo'] = 'required|image|max:1024';
-            $rules['email'] = 'required|email|max:100';
+            $rules['email'] = 'required|email|max:100|unique:users,email';
         } elseif ($this->profile_photo) {
             $rules['profile_photo'] = 'image|max:1024';
         }

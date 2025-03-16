@@ -49,10 +49,10 @@ class LabForm extends Component
             'type' => 'required|string|max:255',
             'manager' => 'required',
             'contact_number' => 'required|string|max:255',
-            'working_hours' => 'required|string|max:255',
-            'capacity' => 'required|string|max:255',
-            'description' => 'required|string',
-            'safety_guidelines' => 'required|string',
+            'working_hours' => 'required|string|max:2',
+            'capacity' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'safety_guidelines' => 'nullable|string',
             'notes' => 'nullable|string',
         ];
 

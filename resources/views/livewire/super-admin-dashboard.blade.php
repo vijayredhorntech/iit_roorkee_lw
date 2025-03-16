@@ -142,7 +142,7 @@
     <div class="w-full grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-2 mt-6">
         <div class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-primary bg-white flex gap-2 flex-col xl:col-span-1 lg:col-span-2 md:col-span-2 ">
             <div class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20">
-                <span class="font-semibold text-ternary text-lg">Top Booked Instruments</span>
+                <span class="font-semibold text-primary text-lg">Top Booked Instruments</span>
             </div>
             <div class="w-full overflow-x-auto p-4">
                 <div id="topInstrumentsBooked"></div>
@@ -150,7 +150,7 @@
         </div>
         <div class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-success bg-white flex gap-2 flex-col ">
             <div class="bg-success/10 px-4 py-2 border-b-[2px] border-b-success/20">
-                <span class="font-semibold text-ternary text-lg">Most Serviced Instruments</span>
+                <span class="font-semibold text-success text-lg">Most Serviced Instruments</span>
             </div>
 
             <div class="w-full overflow-x-auto p-4">
@@ -159,7 +159,7 @@
         </div>
         <div class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-warning bg-white flex gap-2 flex-col">
             <div class="bg-warning/10 px-4 py-2 border-b-[2px] border-b-warning/20">
-                <span class="font-semibold text-ternary text-lg">Top Students </span>
+                <span class="font-semibold text-warning text-lg">Top Students </span>
             </div>
 
             <div class="w-full overflow-x-auto p-4">

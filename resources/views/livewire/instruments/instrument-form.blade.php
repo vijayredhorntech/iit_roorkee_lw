@@ -161,7 +161,7 @@
             </div>
             <div class="w-full flex flex-col gap-1">
                 <label class="font-semibold text-primary">Mobile Number  <span class="text-danger">*</span></label>
-                <input type="email" wire:model="engineer_mobile"  placeholder="Mobile Number" oninput="if(this.value.length > 15) this.value=this.value.slice(0,15)"
+                <input type="number" wire:model="engineer_mobile"  placeholder="Mobile Number" oninput="if(this.value.length > 15) this.value=this.value.slice(0,15)"
                        class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
                 @error('engineer_mobile') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
             </div>

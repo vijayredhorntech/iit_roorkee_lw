@@ -125,7 +125,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm text-center" colspan="9">No PI found</td>
+                        <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm text-center" colspan="9">No lab found</td>
                     </tr>
                 @endforelse
 

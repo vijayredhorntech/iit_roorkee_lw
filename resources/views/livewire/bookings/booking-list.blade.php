@@ -18,6 +18,7 @@
                     <input type="text" wire:model.live.debounce.1000ms="search" name="search" required placeholder="Search Bookings"
                            class="px-2 py-1 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
 
+                    @if(!$studentView)
                     <select wire:model.live="studentSearch" required
                             class="px-2 py-1 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
                         <option value="">Select Student</option>
@@ -25,6 +26,7 @@
                             <option value="{{$student->first_name}}">{{$student->first_name}} {{$student->last_name}}</option>
                         @endforeach
                     </select>
+                    @endif
 
                     <select wire:model.live="instrumentSearch" required
                             class="px-2 py-1 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">

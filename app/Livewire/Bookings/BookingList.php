@@ -21,6 +21,7 @@ class BookingList extends Component
     public $studentSearch = '';
     public $instrumentSearch = '';
     public $status = 'All';
+    public $studentView = false;
 
     public function updatingSearch()
     {
@@ -166,6 +167,8 @@ class BookingList extends Component
                 $q->where('principal_investigator_id', auth()->user()->principalInvestigators->first()->id);
             })->with(['student', 'instrument', 'slot'])->latest();
         } elseif (auth()->user()->hasRole('student')) {
+
+            $this->studentView = true;
             $query = Booking::where('student_id', auth()->user()->students->first()->id)->with(['student', 'instrument', 'slot'])->latest();
         }
 

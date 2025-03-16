@@ -3,6 +3,7 @@
         <div class="w-full flex flex-col gap-1">
             <label class="font-semibold text-primary">Principle Investigator <span class="text-danger">*</span></label>
             <select wire:model="principal_investigator_id" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
+                <option value="">--- Select principle investigator ---</option>
                 @foreach($principleInvestigators as $principleInvestigator)
                     <option value="{{$principleInvestigator->id}}">{{$principleInvestigator->first_name}} {{$principleInvestigator->last_name}}</option>
                 @endforeach
@@ -31,13 +32,11 @@
         <div class="w-full flex flex-col gap-1">
             <label class="font-semibold text-primary">Department <span class="text-danger">*</span></label>
             <select wire:model="department" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
-                <option value="Chemistry">Chemistry</option>
-                <option value="Physics">Physics</option>
-                <option value="Mathematics">Mathematics</option>
-                <option value="Biology">Biology</option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Engineering">Engineering</option>
-                <option value="Medicine">Medicine</option>
+                <option value="">--- Select department ---</option>
+                @forelse(App\Models\Department::all() as $department)
+                    <option value="{{$department->title}}">{{$department->title}}</option>
+                @empty
+                @endforelse
             </select>
             @error('department') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
         </div>
@@ -55,15 +54,22 @@
 
         <div class="w-full flex flex-col gap-1">
             <label class="font-semibold text-primary">Mobile Number <span class="text-danger">*</span></label>
-            <input type="tel" wire:model="mobile_number" placeholder="Enter mobile number" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
+            <input type="number" wire:model="mobile_number" placeholder="Enter mobile number" maxlength="15" oninput="if(this.value.length > 15) this.value=this.value.slice(0,15)" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
             @error('mobile_number') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
         </div>
         <div class="w-full flex flex-col gap-1">
             <label class="font-semibold text-primary">Year of Study <span class="text-danger">*</span></label>
             <select wire:model="year_of_study" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
-                <option value="1st">1st Year</option>
-                <option value="2nd">2nd Year</option>
-                <option value="3rd">3rd Year</option>
+                <option value="">--- Select year of study ---</option>
+                <option value="2021-2022">2021-2022</option>
+                <option value="2022-2023">2022-2023</option>
+                <option value="2023-2024">2023-2024</option>
+                <option value="2024-2025">2024-2025</option>
+                <option value="2025-2026">2025-2026</option>
+                <option value="2026-2027">2026-2027</option>
+                <option value="2027-2028">2027-2028</option>
+                <option value="2028-2029">2028-2029</option>
+                <option value="2029-2030">2029-2030</option>
             </select>
             @error('year_of_study') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i>{{ $message }}</span> @enderror
         </div>

@@ -11,7 +11,7 @@
                 @endif
                 <input type="file" wire:model="lab_image" accept="image/*" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
                 <div wire:loading wire:target="lab_image" class="text-sm text-danger"><i class="fas fa-hourglass-half fa-spin mr-2"></i> Uploading file... Please wait</div>
-                @error('profile_photo') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
+                @error('lab_image') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
             </div>
             <div class="w-full flex flex-col gap-1">
                 <label class="font-semibold text-primary">Lab Name <span class="text-danger">*</span></label>
@@ -24,13 +24,11 @@
                 <select name="department" wire:model="department"
                         class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
                     <option value="">--- Select department ---</option>
-                    <option value="Chemistry">Chemistry</option>
-                    <option value="Physics">Physics</option>
-                    <option value="Mathematics">Mathematics</option>
-                    <option value="Biology">Biology</option>
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="Engineering">Engineering</option>
-                    <option value="Medicine">Medicine</option>
+                    @forelse (App\Models\Department::all() as $department)
+                        <option value="{{ $department->title }}">{{ $department->title }}</option>
+                    @empty
+                        <option value="">--- No department found ---</option>
+                    @endforelse
                 </select>
                  @error('department') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
             </div>
@@ -68,11 +66,10 @@
                         class="text-danger">*</span></label>
                 <select name="lab_manager" wire:model="manager"
                         class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
-                        <option value="">--- select lab manager ---</option>
+                        <option value="">--- Select lab manager ---</option>
                         @forelse ($principleInvestigators as $principleInvestigator)
                             <option value="{{ $principleInvestigator->id }}">{{ $principleInvestigator->user->name }}</option>
                         @empty
-                            <option value="">--- No lab manager found ---</option>
                         @endforelse
                 </select>
                 @error('manager') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
@@ -88,14 +85,13 @@
             <div class="w-full flex flex-col gap-1">
                 <label class="font-semibold text-primary">Working Hours <span
                         class="text-danger">*</span></label>
-                <input type="number" name="working_hours" wire:model="working_hours"
+                <input type="number" name="working_hours" wire:model="working_hours" maxlength="2" oninput="if(this.value.length > 2) this.value=this.value.slice(0,2)"
                        placeholder="Enter working hours"
                        class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
                 @error('working_hours') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
             </div>
             <div class="w-full flex flex-col gap-1">
-                <label class="font-semibold text-primary">Maximum Capacity <span
-                        class="text-danger">*</span></label>
+                <label class="font-semibold text-primary">Maximum Capacity</label>
                 <input type="number" name="max_capacity" wire:model="capacity"
                        placeholder="Enter maximum capacity"
                        class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-primary/70 border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>

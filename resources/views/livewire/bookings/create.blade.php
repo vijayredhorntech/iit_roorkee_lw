@@ -20,10 +20,10 @@
         </div>
     @endif
     @if($isEditing)
-        <div class="w-full border-[1px] border-t-[4px] border-danger/20 border-t-danger bg-white flex flex-col shadow-lg shadow-gray-300">
-            <div class="bg-danger/10 px-4 py-2 border-b-[2px] border-b-danger/20 flex justify-between">
-                <span class="font-semibold text-danger text-xl">New Booking</span>
-                <button wire:click="hideForm" class="text-sm bg-danger/20 text-danger px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-danger/80 hover:text-white hover:bg-danger hover:border-danger/30 transition ease-in duration-2000">
+        <div class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex flex-col shadow-lg shadow-gray-300">
+            <div class="bg-primary/10 px-4 py-2 border-b-[2px] border-b-primary/20 flex justify-between">
+                <span class="font-semibold text-primary text-xl">New Booking</span>
+                <button wire:click="hideForm" class="text-sm bg-primary/20 text-primary px-4 py-1 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] font-semibold border-[2px] border-primary/80 hover:text-white hover:bg-primary hover:border-primary/30 transition ease-in duration-2000">
                     <i class="fa fa-angle-left mr-2"></i>Back
                 </button>
             </div>
@@ -160,7 +160,7 @@
                             </div>
                         @else
                             <div class="flex justify-center items-center h-full">
-                                <img class="h-40 " src="{{asset('assets/images/bookNow.png')}}" alt="">
+                                <img class="h-40 " src="{{asset('assets/images/logo.png')}}" alt="">
                             </div>
                         @endif
                     </div>

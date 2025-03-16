@@ -56,7 +56,7 @@ class StudentForm extends Component
 
         if (!$this->isEditing) {
             $rules['profile_photo'] = 'required|image|max:1024';
-            $rules['email'] = 'required|email|max:100|unique:students,email';
+            $rules['email'] = 'required|email|max:100|unique:users,email';
         } elseif ($this->profile_photo) {
             $rules['profile_photo'] = 'image|max:1024';
         }

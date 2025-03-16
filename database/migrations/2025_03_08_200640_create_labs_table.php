@@ -19,9 +19,9 @@ return new class extends Migration {
             $table->string('type');
             $table->string('contact_number');
             $table->string('working_hours');
-            $table->string('capacity');
-            $table->longText('description');
-            $table->longText('safety_guidelines');
+            $table->string('capacity')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('safety_guidelines')->nullable();
             $table->text('notes')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
