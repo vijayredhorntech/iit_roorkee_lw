@@ -13,6 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Seed basic data
+        $this->call([
+            TitleSeeder::class,
+            DepartmentSeeder::class,
+            DesignationSeeder::class,
+            QualificationSeeder::class,
+        ]);
+
         // Create Roles
         Role::create(['name' => 'super_admin']);
         Role::create(['name' => 'pi']);

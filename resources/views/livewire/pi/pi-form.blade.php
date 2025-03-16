@@ -7,9 +7,11 @@
             <label class="font-semibold text-primary">Title (Dr./Prof./etc.) <span class="text-danger">*</span></label>
             <select wire:model="title" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
                 <option value="">--- Select title ---</option>
-                <option value="Dr.">Dr.</option>
-                <option value="Prof.">Prof.</option>
-                <option value="Assoc. Prof.">Assoc. Prof.</option>
+                 @forelse(App\Models\Title::all() as $title)
+                    <option value="{{$title->title}}">{{$title->title}}</option>
+                @empty
+                    <option value="">No title found</option>
+                @endforelse
             </select>
             @error('title') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
         </div>
@@ -27,13 +29,11 @@
             <label class="font-semibold text-primary">Department <span class="text-danger">*</span></label>
             <select wire:model="department" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
                 <option value="">--- Select department ---</option>
-                <option value="Chemistry">Chemistry</option>
-                <option value="Physics">Physics</option>
-                <option value="Mathematics">Mathematics</option>
-                <option value="Biology">Biology</option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Engineering">Engineering</option>
-                <option value="Medicine">Medicine</option>
+                @forelse(App\Models\Department::all() as $department)
+                    <option value="{{$department->title}}">{{$department->title}}</option>
+                @empty
+                    <option value="">No department found</option>
+                @endforelse
             </select>
             @error('department') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
         </div>
@@ -41,11 +41,11 @@
             <label class="font-semibold text-primary">Designation/Position <span class="text-danger">*</span></label>
             <select wire:model="designation" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
                 <option value="">--- Select designation ---</option>
-                <option value="Professor">Professor</option>
-                <option value="Assistant Professor">Assistant Professor</option>
-                <option value="Associate Professor">Associate Professor</option>
-                <option value="Lecturer">Lecturer</option>
-                <option value="Senior Lecturer">Senior Lecturer</option>
+                @forelse(App\Models\Designation::all() as $designation)
+                    <option value="{{$designation->title}}">{{$designation->title}}</option>
+                @empty
+                    <option value="">No designation found</option>
+                @endforelse
             </select>
             @error('designation') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
         </div>
@@ -63,7 +63,7 @@
         <div class="w-full flex flex-col gap-1">
             <label class="font-semibold text-primary">Phone Number <span class="text-danger">*</span></label>
             <input type="number" wire:model="phone" maxlength="15" oninput="if(this.value.length > 15) this.value=this.value.slice(0,15)" placeholder="Enter phone number" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"/>
-            @error('phone') <span class="text-red-500"><i class=x`"fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
+            @error('phone') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
         </div>
         <div class="w-full flex flex-col gap-1">
             <label class="font-semibold text-primary">Mobile Number</label>
@@ -80,20 +80,17 @@
             <label class="font-semibold text-primary">Academic Qualifications <span class="text-danger">*</span></label>
             <select wire:model="qualification" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000">
                 <option value="">--- Select qualification ---</option>
-                <option value="Bachelor of Science">Bachelor of Science</option>
-                <option value="Bachelor of Arts">Bachelor of Arts</option>
-                <option value="Bachelor of Science (Honours)">Bachelor of Science (Honours)</option>
-                <option value="PhD">PhD</option>
-                <option value="Master of Science">Master of Science</option>
-                <option value="Master of Arts">Master of Arts</option>
-                <option value="Master of Science (Honours)">Master of Science (Honours)</option>
-                <option value="Other">Other</option>
+                @forelse(App\Models\Qualification::all() as $qualification)
+                    <option value="{{$qualification->title}}">{{$qualification->title}}</option>
+                @empty
+                    <option value="">No qualification found</option>
+                @endforelse
             </select>
             @error('qualification') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
         </div>
         <div class="w-full flex flex-col gap-1">
             <label class="font-semibold text-primary">Office Address <span class="text-danger">*</span></label>
-            <textarea wire:model="office_address" rows="2" placeholder="Enter office address" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"></textarea>
+            <textarea wire:model="office_address" rows="1" placeholder="Enter office address" class="px-2 py-2 w-full text-sm font-medium bg-transparent placeholder-black border-[2px] border-primary/40 rounded-[3px] rounded-tr-[8px] rounded-bl-[8px] focus:ring-0 focus:outline-none focus:border-primary transition ease-in duration-2000"></textarea>
             @error('office_address') <span class="text-red-500"><i class="fa fa-triangle-exclamation mr-2"></i> {{ $message }}</span> @enderror
         </div>
         <div class="w-full flex flex-col gap-1">

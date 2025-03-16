@@ -207,6 +207,18 @@
                 </div>
             </a>
           @endcan
+            @can('account settings')
+            <a href="{{route('account.settings')}}">
+                <div
+                    class=" {{Route::currentRouteName()==='account.settings'?'bg-primaryLight/90 border-[2px] border-white text-primary':'border-[2px] border-primary  bg-primary text-white/90 hover:bg-primaryLight/10'}} w-full flex justify-between items-center py-1 px-4 rounded-[3px] relative transition ease-in duration-2000">
+                    <div class="flex items-center">
+                        <i class="fa fa-user-shield mr-2 text-sm"></i>
+                        <span class="text-lg font-medium">Admin Settings</span>
+                    </div>
+                    <div class="h-16 w-12 bg-primary absolute top-1 -right-6 rotate-45"></div>
+                </div>
+            </a>
+          @endcan
 
         </div>
 

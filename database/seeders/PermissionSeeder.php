@@ -52,6 +52,8 @@ class PermissionSeeder extends Seeder
             'update instrument service request',
 
             'view instrument services',
+
+            'account settings',
         ];
 
         foreach ($permissions as $permission) {

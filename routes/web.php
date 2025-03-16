@@ -75,4 +75,11 @@ Route::prefix('bookings')->name('bookings.')->group(function () {
         ->name('create');
 });
 
+Route::prefix('account')->name('account.')->group(function () {
+    Route::view('/', 'pages.account.settings')
+        ->middleware(['auth'])
+        ->middleware( 'can:account settings')
+        ->name('settings');
+});
+
 require __DIR__.'/auth.php';
