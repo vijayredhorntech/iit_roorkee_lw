@@ -42,13 +42,13 @@ class StudentForm extends Component
     protected function rules()
     {
         $rules = [
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'academic_id' => 'required|string|max:50',
+            'first_name' => 'required|string|max:20',
+            'last_name' => 'required|string|max:20',
+            'academic_id' => 'required|string|max:20',
             'department' => 'required|string',
             'year_of_study' => 'required|string',
-            'alt_email' => 'nullable|email|max:100',
-            'mobile_number' => 'required|string|max:20',
+            'alt_email' => 'nullable|email|max:20',
+            'mobile_number' => 'required|string|max:20|min:10',
             'research_area' => 'required|string|max:255',
             'address' => 'required|string',
             'principal_investigator_id' => 'required|exists:principal_investigators,id'

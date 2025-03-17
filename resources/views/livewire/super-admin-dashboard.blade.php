@@ -4,7 +4,7 @@
             <div class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-primary bg-white flex gap-2 items-center justify-between p-4">
                 <div class="flex flex-col gap-2">
                     <span class="font-semibold text-black text-md">Labs</span>
-                    <span class="font-bold text-2xl text-ternary">{{$totalLabs}}</span>
+                    <span class="font-bold text-2xl text-primary">{{$totalLabs}}</span>
                 </div>
                 <div>
                     <i class="fa-solid fa-flask text-4xl text-primary"></i>
@@ -27,10 +27,10 @@
 
         <!-- Total Students -->
         <a href="{{route('student.list')}}">
-            <div class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-success bg-white flex gap-2 items-center justify-between p-4">
+            <div class="w-full border-[1px] border-t-[4px] border-success/20 border-t-success bg-white flex gap-2 items-center justify-between p-4">
                 <div class="flex flex-col gap-2">
                     <span class="font-semibold text-black text-md">Students</span>
-                    <span class="font-bold text-2xl text-ternary">{{$totalStudents}}</span>
+                    <span class="font-bold text-2xl text-success">{{$totalStudents}}</span>
                 </div>
                 <div>
                     <i class="fa fa-user-graduate text-4xl text-success"></i>
@@ -50,13 +50,12 @@
                 </div>
             </div>
         </a>
-
         <!-- Total Instruments -->
         <a href="{{route('instrument.instrument')}}">
-            <div class="w-full border-[1px] border-t-[4px] border-ternary/20 border-t-primary bg-white flex gap-2 items-center justify-between p-4">
+            <div class="w-full border-[1px] border-t-[4px] border-primary/20 border-t-primary bg-white flex gap-2 items-center justify-between p-4">
                 <div class="flex flex-col gap-2">
                     <span class="font-semibold text-black text-md">Instruments</span>
-                    <span class="font-bold text-2xl text-ternary">{{$totalInstruments}}</span>
+                    <span class="font-bold text-2xl text-primary">{{$totalInstruments}}</span>
                 </div>
                 <div>
                     <i class="fa fa-microscope text-4xl text-primary"></i>

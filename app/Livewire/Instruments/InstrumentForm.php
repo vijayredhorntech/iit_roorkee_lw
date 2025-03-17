@@ -83,10 +83,10 @@ class InstrumentForm extends Component
             'warranty_period' => 'required|integer',
             'next_service_date' => 'required|date',
             'video_link' => 'nullable|url',
-            'engineer_name' => 'required|string|max:255',
-            'engineer_email' => 'required|email|max:255',
-            'engineer_mobile' => 'required|string|max:20',
-            'engineer_address' => 'required|string|max:500'
+            'engineer_name' => 'required|string|max:20',
+            'engineer_email' => 'required|email|max:20',
+            'engineer_mobile' => 'required|string|max:15|min:10',
+            'engineer_address' => 'required|string|max:100'
         ];
 
         if (!$this->isEditing) {

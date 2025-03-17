@@ -77,16 +77,13 @@
     </style>
 
 </head>
-<body class="bg-gray-100 relative"
-      style="font-family: 'Public Sans', serif; height: 100vh; width: 100%; overflow:hidden">
+<body class="bg-gray-100 relative" style="font-family: 'Public Sans', serif; height: 100vh; width: 100%; overflow:hidden">
 <div id="sideBarOverlay" class="xl:w-0 lg:w-0  h-full bg-black/40 absolute top-0 left-0 z-40"
      onclick="document.getElementById('sideBarDiv').classList.toggle('hidden');document.getElementById('sideBarOverlay').classList.toggle('w-full');"></div>
 
 <div class="flex w-full ">
-    <div id="sideBarDiv"
-         class="z-20 w-72 p-4 h-[100vh] bg-primary overflow-x-hidden overflow-y-auto flex-none xl:static lg:static absolute top-0 left-0 xl:block lg:block hidden z-50">
-        <div
-            class="w-full flex flex-col justify-center items-center border-b-[1px] pb-2 border-b-gray-100/20 shadow-lg shadow-gray-700/10">
+    <div id="sideBarDiv" class="z-20 w-72 p-4 h-[100vh] bg-primary overflow-x-hidden overflow-y-auto flex-none xl:static lg:static absolute top-0 left-0 xl:block lg:block hidden z-50">
+        <div class="w-full flex flex-col justify-center items-center border-b-[1px] pb-2 border-b-gray-100/20 shadow-lg shadow-gray-700/10">
             <img src="{{asset('assets/images/whiteLogo.png')}}" class="h-32 w-auto" alt="Cloud Travel">
             <span class="font-semibold text-white/80 mt-2 text-2xl">IIT ROORKEE</span>
             <p class="text-primaryLight text-xs"><i class="fa-solid fa-flask mr-1"></i>
