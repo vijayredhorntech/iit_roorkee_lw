@@ -60,7 +60,7 @@
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm">{{$loop->iteration}}</td>
                         <td class="border-[2px] border-secondary/40 px-4 py-1.5 text-ternary/80 font-medium text-sm w-[300px]">
                             <div class="flex items-center gap-2">
-                                <img src="{{ asset('storage/' . $booking->student->profile_photo??'') }}"
+                                <img src="{{ asset('storage/' . $booking->student?->profile_photo) }}"
                                      alt="{{ $booking->student->first_name }}" class="h-12 w-12 object-cover rounded-full"/>
                                 <div class="w-max">
                                     <span class=" text-md text-center">{{$booking->student->first_name}} {{$booking->student->last_name}}</span> <br>

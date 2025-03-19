@@ -48,6 +48,13 @@ class StudentList extends Component
     public function deleteStudent($id)
     {
         $student = Student::findOrFail($id);
+        
+        // Check if student has any bookings
+        if ($student->bookings()->count() > 0) {
+            session()->flash('error', 'Cannot delete student. This student has associated bookings.');
+            return;
+        }
+        
         $student->user->delete();
         $student->delete();
         $this->resetPage();
