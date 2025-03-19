@@ -94,6 +94,12 @@ class InstrumentList extends Component
         $instrument = Instrument::findOrFail($id);
         $purchaseInfo = InstrumentPurchaseInfo::where('instrument_id', $id)->first();
 
+        $bookings = $instrument->bookings;
+        if ($bookings->count() > 0) {
+            session()->flash('error', 'Cannot delete Instrument. It has associated bookings.');
+            return;
+        }
+
         // Delete files
         if ($instrument->photos) {
             foreach (json_decode($instrument->photos) as $photo) {

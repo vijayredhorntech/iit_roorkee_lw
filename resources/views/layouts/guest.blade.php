@@ -8,6 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link rel="icon" href="{{ asset('assets/images/whiteLogo.png') }}" type="image/x-icon"/>
+
     <title>Login</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
