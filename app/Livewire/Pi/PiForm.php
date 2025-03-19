@@ -50,13 +50,13 @@ class PiForm extends Component
     {
         $rules = [
             'title' => 'required',
-            'first_name' => 'required|string|max:20',
-            'last_name' => 'required|string|max:20',
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
             'department' => 'required|string',
             'designation' => 'required|string',
-            'alt_email' => 'nullable|email|max:20',
-            'phone' => 'required|string|min:10|max:20|regex:/^\d{1,15}$/',
-            'mobile' => 'nullable|string|min:10|max:20|regex:/^\d{1,15}$/',
+            'alt_email' => 'nullable|email|max:100',
+            'phone' => 'required|string|min:10|max:15|regex:/^\d{1,15}$/',
+            'mobile' => 'nullable|string|min:10|max:15|regex:/^\d{1,15}$/',
             'specialization' => 'required|string|max:255',
             'qualification' => 'required|string',
             'office_address' => 'required|string',

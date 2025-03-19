@@ -48,7 +48,7 @@ class LabForm extends Component
             'room_number' => 'required|string|max:255',
             'type' => 'required|string|max:255',
             'manager' => 'required',
-            'contact_number' => 'required|string|max:255',
+            'contact_number' => 'required|string|min:10|max:255',
             'working_hours' => 'required|string|max:2',
             'capacity' => 'nullable|string|max:255',
             'description' => 'nullable|string',
